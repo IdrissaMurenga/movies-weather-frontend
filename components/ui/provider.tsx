@@ -5,10 +5,11 @@ import {
   ColorModeProvider,
   type ColorModeProviderProps,
 } from "./color-mode"
+import { themeSystem } from "../themes/themes"
 
 export function Provider(props: ColorModeProviderProps) {
   return (
-    <ChakraProvider value={defaultSystem}>
+    <ChakraProvider value={themeSystem}>
       <ColorModeProvider {...props} />
     </ChakraProvider>
   )
