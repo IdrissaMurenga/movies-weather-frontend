@@ -25,7 +25,7 @@ const useLogin = () => {
         // handleSubmit function to handle form submission
         onSubmit: async (values, {setFieldError, setSubmitting}) => {
             try {
-                // Auth.js → Credentials provider (no redirect so we can handle errors)
+                // Auth.js Login Credentials provider
                 const res = await signIn("credentials", {
                     email: values.email,
                     password: values.password,
@@ -44,19 +44,15 @@ const useLogin = () => {
                     } else if (msg.includes("incorrect password") || msg.includes("password")) {
                         setFieldError("password", "Incorrect password");
                     } else if (msg === "credentialssignin") {
-                        // generic: authorize returned null
                         setFieldError("password", "Invalid email or password");
                     } else {
                         setFieldError("password", res.error);
                     }
-                    return; // ⛔️ don’t navigate
+                    return;
                 }
                 if (res?.ok) {
-
                     setDelayedLoading(true);
-
                     router.replace("/pages/dashboard");
-
                 }
             } catch (error) {
             } finally {
