@@ -41,7 +41,7 @@ const MovieCard = () => {
           return (
             <Box key={movie.id}>
                 {movie.poster ? (
-                  <Image src={movie.poster} alt={movie.title} h="320px" border='2px solid'  />
+                  <Image src={movie.poster} alt={movie.title} h="320px" border='2px solid' rounded='md'  />
                 ) : (
                   <Box h="320px" bg="gray.100" />
                 )}

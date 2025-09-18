@@ -1,4 +1,4 @@
-import { GetUserData, Weather, SearchMoviesData, SearchMoviesVars } from "./types";
+import { GetUserData, Weather, SearchMoviesData, SearchMoviesVars, FavMovie } from "./types";
 import { gql, type TypedDocumentNode } from "@apollo/client";
 
 export const GET_USER:TypedDocumentNode<GetUserData> = gql`
@@ -25,7 +25,6 @@ export const GET_WEATHER:TypedDocumentNode<Weather> = gql`
         }
     }
 `
-
 export const SEARCH_MOVIES: TypedDocumentNode<SearchMoviesData, SearchMoviesVars> = gql`
     query SearchMovies($query: String!, $page: Int) {
         searchMovies(query: $query, page: $page) {
@@ -40,4 +39,19 @@ export const SEARCH_MOVIES: TypedDocumentNode<SearchMoviesData, SearchMoviesVars
             total
         }
     }
+`
+
+export const FAVORITE_MOVIES:TypedDocumentNode<FavMovie> = gql`
+    query favoriteMovies {
+        favoriteMovies {
+            movie {
+                id
+                title
+                poster
+                year
+                type
+            }
+        }
+    }
+
 `

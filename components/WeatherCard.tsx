@@ -38,71 +38,53 @@ const WeatherCard = () => {
         );
     }
 
-    const weather = data
+    const weather = data.getWeather
 
     return (
-    <Box
-      p={6}
-      bgGradient="linear(to-b, #0b4a8b, #0b3d73)"
-      color="white"
-      rounded="2xl"
-      shadow="xl"
-    >
-      {/* Header */}
-      <HStack justify="space-between" align="start">
-        <VStack gap={0} align="start">
-          <Text fontSize="sm" opacity={0.9}>Current weather</Text>
-          <Text fontSize="xs" opacity={0.85}>{nowTime()}</Text>
-        </VStack>
-
-        {/* optional “refresh” */}
-        <IconButton
-          aria-label="Refresh"
-          size="sm"
-          variant="ghost"
-          color="whiteAlpha.800"
-        />
-      </HStack>
-
-      {/* Body */}
-      {weather ? (
-        <>
-          <Flex mt={3} align="center" gap={4} wrap="wrap">
-            <Image src={weather.iconUrl} alt={weather.description} boxSize="64px" />
-            <Heading size="3xl" lineHeight="1">
-              {Math.round(weather.temp)}°C
-            </Heading>
-            <VStack gap={0} align="start">
-              <Heading size="md" fontWeight="semibold" textTransform="capitalize">
-                {weather.description}
+      <Box p={6} bgColor={'#4444'} color="white" rounded="3xl" shadow="xl">
+        <Text mb={4} fontSize="sm" opacity={0.9}>
+          {weather?.city ?? ""}
+        </Text>
+        <HStack justify="space-between" align="start">
+          <VStack gap={0} align="start">
+            <Text fontSize="sm" opacity={0.9}>Current weather</Text>
+            <Text fontSize="xs" opacity={0.85}>{nowTime()}</Text>
+          </VStack>
+        </HStack>
+        {weather ? (
+          <Box>
+            <Flex mt={3} align="center" gap={4} wrap="wrap">
+              <Image src={weather.iconUrl} alt={weather.description} boxSize="64px" />
+              <Heading size="3xl" lineHeight="1">
+                {Math.round(weather.temp)}°C
               </Heading>
-              <Text opacity={0.9} fontSize="sm">
-                Feels like {Math.round(weather.feelsLike)}°
-              </Text>
-            </VStack>
-          </Flex>
+              <VStack gap={0} align="start">
+                <Heading size="md" fontWeight="semibold" textTransform="capitalize">
+                  {weather.description}
+                </Heading>
+                <Text opacity={0.9} fontSize="sm">
+                  Feels like {Math.round(weather.feelsLike)}°
+                </Text>
+              </VStack>
+            </Flex>
 
-          {/* Sentence line */}
-          <Text mt={3} opacity={0.95}>
-            The skies will be {weather.description}.
-          </Text>
+            {/* Sentence line */}
+            <Text mt={3} opacity={0.95}>
+              The skies will be {weather.description}.
+            </Text>
 
 
-          {/* Metrics row (only what we have) */}
-          <HStack gap={6} wrap="wrap">
-            <Metric label="Wind" value={`${Math.round(weather.windSpeed * 3.6)} km/h`} />
-            <Metric label="Humidity" value={`${weather.humidity}%`} />
-            <Metric label="Dew point" value={dewPointC(weather.temp, weather.humidity)} />
-          </HStack>
-        </>
-      ) : (
-        <Text mt={4}>No weather yet — set your city in profile.</Text>
-      )}
-
-      <Text mt={4} fontSize="sm" opacity={0.9}>
-        {weather?.city ?? ""}
-      </Text>
-    </Box>
+            {/* Metrics row (only what we have) */}
+            <HStack gap={6} wrap="wrap">
+              <Metric label="Wind" value={`${Math.round(weather.windSpeed * 3.6)} km/h`} />
+              <Metric label="Humidity" value={`${weather.humidity}%`} />
+              <Metric label="Dew point" value={dewPointC(weather.temp, weather.humidity)} />
+            </HStack>
+          </Box>
+        ) : (
+          <Text mt={4}>No weather yet — set your city in profile.</Text>
+        )}
+      </Box>
     )
 }
 

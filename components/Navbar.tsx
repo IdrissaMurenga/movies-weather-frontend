@@ -30,7 +30,6 @@ const Navbar = () => {
                     </Avatar.Root>
                 </HStack>
             </HStack>
-            <Text pt='1.5rem' pl='1rem'>{user?.city}</Text>
         </Container>
     )
 }

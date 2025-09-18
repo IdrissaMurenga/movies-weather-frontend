@@ -1,12 +1,14 @@
 export type Weather = {
-    temp: number;
-    city: string;
-    iconUrl: string
-    description: string;
-    humidity: number;
-    windSpeed: number;
-    feelsLike: number;
-} | null;
+    getWeather: {
+        temp: number;
+        city: string;
+        iconUrl: string
+        description: string;
+        humidity: number;
+        windSpeed: number;
+        feelsLike: number;
+    } | null
+};
 
 export type GetUserData = {
     me: {
@@ -36,9 +38,16 @@ export type SearchMoviesVars = {
     query: string;
     page?: number | null;
 };
-
-export type AddFavoriteData = { addFavorite: { id: string; user: string; movie: Movie } };
-export type AddFavoriteVars = { imdbID: string };
-
-export type RemoveFavoriteData = { removeFavorite: boolean };
-export type RemoveFavoriteVars = { imdbID: string };
+export type FavMovie = {
+    favoriteMovies: {
+        movie: {
+            id: string;
+            imdbID: string;
+            title: string;
+            year: string;
+            type: string;
+            poster?: string | null;
+            provider: string;
+        }
+    }[]
+}
