@@ -4,9 +4,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup"
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { toaster } from "@/components/ui/toaster";
 
 const useLogin = () => {
     const router = useRouter()
+    const [error, setError] = useState('')
 
     // useState hook to manage loading state
     const [delayedLoading, setDelayedLoading] = useState(false)
@@ -23,7 +25,7 @@ const useLogin = () => {
         }),
         
         // handleSubmit function to handle form submission
-        onSubmit: async (values, {setFieldError, setSubmitting}) => {
+        onSubmit: async (values, {setFieldError, setSubmitting, setStatus}) => {
             try {
                 // Auth.js Login Credentials provider
                 const res = await signIn("credentials", {
@@ -34,27 +36,41 @@ const useLogin = () => {
                 console.log('signIn result:', res)
 
                 if (!res) {
-                    setFieldError("password", "Login failed. Try again.");
+                    toaster.create({
+                        title: "Login failed. Try again.",
+                        type: "error",
+                        duration: 3000,
+                    });
                     return;
                 }
-                if (res.error) {
-                    const msg = res.error.toLowerCase();
-                    if (msg.includes("user not found")) {
-                        setFieldError("email", "No user found with this email");
-                    } else if (msg.includes("incorrect password") || msg.includes("password")) {
-                        setFieldError("password", "Incorrect password");
-                    } else if (msg === "credentialssignin") {
-                        setFieldError("password", "Invalid email or password");
+                if (res?.error) {
+                    if (res.error === "user not found") {
+                        toaster.create({
+                            title: "user not found",
+                            type: "error",
+                            duration: 3000,
+                        });
+                        return
+                    } else if (res.error === "incorrect password") {
+                        setFieldError("password", "incorrect password")
                     } else {
-                        setFieldError("password", res.error);
+                        toaster.create({
+                            title: res.error,
+                            type: "error",
+                            duration:3000
+                        })
                     }
-                    return;
+                    return
                 }
-                if (res?.ok) {
-                    setDelayedLoading(true);
-                    router.replace("/pages/dashboard");
-                }
+                setDelayedLoading(true);
+                router.replace("/pages/dashboard");
+            
             } catch (error) {
+                toaster.create({
+                    title: "Something went wrong. Try again.",
+                    type: "error",
+                    duration:3000
+                })
             } finally {
                 setSubmitting(false)
             }

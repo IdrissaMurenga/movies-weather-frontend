@@ -1,10 +1,7 @@
-import { Box } from '@chakra-ui/react'
-import React from 'react'
 
+import MovieCard from "@/components/MovieCard"
 const movies = () => {
-    return (
-        <Box></Box>
-    )
+    return <MovieCard />
 }
 
 export default movies

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Provider } from "@/components/ui/provider";
-import { Apollo } from "../libs/Apollo";
+import { Toaster } from "@/components/ui/toaster";
+import { Apollo } from "@/libs/Apollo";
 
 export const metadata: Metadata = {
   title: "Movies Weather App",
@@ -18,6 +19,7 @@ export default function RootLayout({
         <Apollo>
           <Provider>
             {children}
+            <Toaster />
           </Provider>
         </Apollo>
       </body>

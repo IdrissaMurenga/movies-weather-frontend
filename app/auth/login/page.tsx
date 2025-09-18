@@ -10,7 +10,7 @@ const Login = () => {
     const {formik, isLoading} =useLogin()
     return (
         <Grid height='100vh' placeItems='center'>
-            <form onSubmit={formik.handleSubmit}>
+            <form noValidate onSubmit={formik.handleSubmit}>
                 <Grid gap='20px' w='450px' bgColor='primary-bgColor' border='1px solid' borderColor='gray.800' p={4} alignItems='center' mx='auto' rounded='xl' >
                     <Field.Root required>
                         <Field.Label>
@@ -23,10 +23,15 @@ const Login = () => {
                                 name='email'
                                 value={formik.values.email}
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 placeholder='Enter your email'
                                 h='48px'
+                                border={formik.touched.email && formik.errors.email ? '1px solid red' : ''}
                             />
                         </InputGroup>
+                        {formik.touched.email && formik.errors.email && (
+                            <Text color="red" fontSize='0.8rem'>{formik.errors.email}</Text>
+                        )} 
                     </Field.Root>
         
                     <Field.Root required>
@@ -40,18 +45,24 @@ const Login = () => {
                                 name="password"
                                 value={formik.values.password}
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 placeholder='************'
                                 h='48px'
+                                border={formik.touched.password && formik.errors.password ? '1px solid red' : ''}
                             />
                         </InputGroup>
+                        {formik.touched.password && formik.errors.password && (
+                            <Text color="red" fontSize='0.8rem'>{formik.errors.password}</Text> 
+                        )} 
                     </Field.Root>
                     <Button
                         disabled={isLoading}
                         loadingText='signing in and redirecting.....'
+                        loading={isLoading}
                         type='submit' 
-                        bgColor='gray.900'
+                        bgColor='btn-bgColor'
                         color='text-primary'
-                        _hover={{ bgColor: 'btn-bgColor' }}
+                        _hover={{ bgColor: 'teal.900' }}
                         fontWeight='bold' 
                         fontSize='text-base'
                     >
