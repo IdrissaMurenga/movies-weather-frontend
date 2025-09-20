@@ -68,7 +68,7 @@ const Login = () => {
                     >
                         Sign in
                     </Button>
-                    <Text textAlign="center"> don't have an account? <Link href='/auth/signup'>signup</Link></Text>
+                    <Text textAlign="center"> don't have an account ? <Link href='/auth/signup'>signup</Link></Text>
                 </Grid>
             </form>
         </Grid>

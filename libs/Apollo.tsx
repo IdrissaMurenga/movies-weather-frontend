@@ -2,13 +2,19 @@
 import { ApolloClient, InMemoryCache, HttpLink, ApolloLink } from "@apollo/client";
 import { ApolloProvider } from "@apollo/client/react";
 
-const httpLink = new HttpLink({ uri: "/api/graphql", fetchOptions: { cache: "no-store" } });
+// apollo link
+const httpLink = new HttpLink({
+    uri: "/api/graphql", // get next.js proxy router
+    fetchOptions: { cache: "no-store" } // prevent Next.js from caching requests
+});
 
 const client = new ApolloClient({
+
+    // apollo client pipeline
     link: ApolloLink.from([httpLink]),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache(), //apollo bulit in cache engine
     defaultOptions: {
-        watchQuery: { fetchPolicy: "cache-and-network" },
+        watchQuery: { fetchPolicy: "cache-and-network" }, //cached data immediately, then refresh from network.
         query: { fetchPolicy: "network-only" },
         mutate: { errorPolicy: "all" },
     },

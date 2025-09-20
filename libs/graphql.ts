@@ -1,5 +1,19 @@
-import { GetUserData, Weather, SearchMoviesData, SearchMoviesVars, FavMovie } from "./types";
+import { GetUserData, Weather, SearchMoviesData, SearchMoviesVars, FavMovie } from "./types/graphql.types";
 import { gql, type TypedDocumentNode } from "@apollo/client";
+
+export const SIGNUP = gql`
+    mutation Signup ($input: SignupInput!) {
+        signup(input:$input){
+            user{
+                id
+                name
+                email
+                city
+            }
+            token
+        }
+    }
+`
 
 export const GET_USER:TypedDocumentNode<GetUserData> = gql`
     query getUser {

@@ -8,7 +8,6 @@ import { toaster } from "@/components/ui/toaster";
 
 const useLogin = () => {
     const router = useRouter()
-    const [error, setError] = useState('')
 
     // useState hook to manage loading state
     const [delayedLoading, setDelayedLoading] = useState(false)

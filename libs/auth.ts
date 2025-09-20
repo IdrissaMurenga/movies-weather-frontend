@@ -100,12 +100,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        const u = user as any
-        token.sub = u.id;
-        token.id = u.id;
-        token.email = u.email;
-        token.city = u.city; 
-        token.apiToken = u.apiToken;
+        token.sub = user.id;
+        token.id = user.id;
+        token.email = user.email;
+        token.city = user.city; 
+        token.apiToken = user.apiToken;
       }
       return token
     },
@@ -115,8 +114,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.name = token.name ?? session.user.name;
         session.user.email = token.email ?? session.user.email;
       }
-      (session as any).city = (token as any).city; 
-      (session as any).apiToken = (token as any).apiToken;
+      session.city = token.city; 
+      session.apiToken = token.apiToken;
       return session;
     },
   }
