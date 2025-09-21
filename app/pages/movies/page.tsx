@@ -1,5 +1,5 @@
 
-import MovieCard from "@/components/MovieCard"
+import MovieCard from "@/app/components/MovieCard"
 const movies = () => {
     return <MovieCard />
 }

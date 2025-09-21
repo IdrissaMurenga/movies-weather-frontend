@@ -1,5 +1,5 @@
 "use client"
-import { Avatar, Box, Container, Flex, Heading, HStack, Text, Button } from "@chakra-ui/react"
+import { Avatar, Box, Container, Flex, Heading, HStack, Text, Button, SkeletonCircle } from "@chakra-ui/react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
 import { useQuery } from "@apollo/client/react"
@@ -9,7 +9,7 @@ import { signOut } from "next-auth/react"
 const Navbar = () => {
     const pathname = usePathname()
     const isActive = pathname
-    const { data } = useQuery(GET_USER)
+    const { data, loading } = useQuery(GET_USER)
     
     const user = data?.me
 
@@ -32,10 +32,13 @@ const Navbar = () => {
                     </Link>
                 </HStack>
                 <HStack>
-                    <Text>{user?.name}</Text>
-                    <Avatar.Root colorPalette={'teal'}>
-                        <Avatar.Fallback name={`${user?.name}`} />
-                    </Avatar.Root>
+                    {loading ?
+                        <SkeletonCircle size={10} />
+                        : 
+                        <Avatar.Root colorPalette={'teal'}>
+                            <Avatar.Fallback name={`${user?.name}`} />
+                        </Avatar.Root>
+                    }
                     <Button onClick={logout}>
                         Logout
                     </Button>

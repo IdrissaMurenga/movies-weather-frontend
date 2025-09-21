@@ -5,7 +5,7 @@ import { PasswordInput } from "@/components/ui/password-input"
 import { CiLock } from "react-icons/ci"
 import { GrMapLocation } from "react-icons/gr"
 import Link from "next/link"
-import useSignup from "./useSignup"
+import useSignup from "@/app/hooks/useSignup"
 
 const Signup = () => {
     const { formik, isLoading } = useSignup()

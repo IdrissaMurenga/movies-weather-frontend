@@ -1,5 +1,5 @@
 import { Container, Grid } from "@chakra-ui/react";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/app/components/Navbar";
 
 export default function MainPageLayout({ children }: { children: React.ReactNode }) {
     return (

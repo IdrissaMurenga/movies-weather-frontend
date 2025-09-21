@@ -1,16 +1,36 @@
 "use client"
 import { useQuery } from "@apollo/client/react"
 import { FAVORITE_MOVIES } from "@/libs/graphql"
-import { Grid, Text, Box, Image, Button, Heading } from "@chakra-ui/react"
+import { Grid, Text, Box, Image, Button, Heading, Skeleton, VStack } from "@chakra-ui/react"
 import Link from "next/link"
+import useFavorite from "@/app/hooks/useFavrite"
 
 const FavoriteList = () => {
-    const { data } = useQuery(FAVORITE_MOVIES)
-    
+    const { data, loading, error } = useQuery(FAVORITE_MOVIES)
+    const { removeFav } = useFavorite()
+
     const favMovies = data?.favoriteMovies ?? []
+
+    const removeFavorite = async (imdbID: string) => {
+        const remove = await removeFav(imdbID)
+        console.log("removed from favorite: ", remove)
+    }
     return (
         <Box>
             <Heading pb={4}>Your Favorite Movies</Heading>
+            {loading && (
+                <Grid templateColumns="repeat(4, 1fr)" gap={4}>
+                    {Array.from({ length: 8 }).map((_, i) => (
+                    <Box key={i} borderWidth="1px" rounded="md" overflow="hidden">
+                        <Skeleton h="240px" w="100%" />
+                        <VStack align="start" p={2}>
+                        <Skeleton h="16px" w="70%" />
+                        <Skeleton h="14px" w="40%" />
+                        </VStack>
+                    </Box>
+                    ))}
+                </Grid>
+            )}
             {favMovies.length === 0 ? 
                 <Box w={"20rem"} mx={"auto"} py="2rem">
                     <Image src="/star.png" alt="star icon" w='9rem' mx={'auto'} />
@@ -35,7 +55,8 @@ const FavoriteList = () => {
                             </Box>
                                 <Button
                                 size="sm"
-                                my='1rem'
+                                    my='1rem'
+                                    onClick={()=>removeFavorite(fav.movie.imdbID)}
                                 >
                                     remove Favorite
                                 </Button>

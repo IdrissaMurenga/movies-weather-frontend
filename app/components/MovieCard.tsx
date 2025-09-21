@@ -3,15 +3,18 @@ import { useState } from 'react'
 import { Box, Button, Container, Input, Grid, Image, VStack, Text,Skeleton } from '@chakra-ui/react'
 import { SEARCH_MOVIES } from '@/libs/graphql'
 import { useQuery } from '@apollo/client/react'
+import useFavrite from '@/app/hooks/useFavrite'
 
 const MovieCard = () => {
-    const [query, setQuery] = useState('')
-    const [input, setInput] = useState('')
+  const [query, setQuery] = useState('')
+  const [input, setInput] = useState('')
+  const { addFav } = useFavrite()
     
-    const { data, error, loading } = useQuery(SEARCH_MOVIES, {
-      variables: { query, page: 1 },
-      skip: !query
-    })
+  const { data, error, loading } = useQuery(SEARCH_MOVIES, {
+    variables: { query, page: 1 },
+    skip: !query
+  })
+  
   const movies = data?.searchMovies.movies ?? []
   
   const searchMovie = (e: React.FormEvent) => {
@@ -20,6 +23,10 @@ const MovieCard = () => {
     if (query.length < 2) return;
     setQuery(query)
   }
+    const addForiteMovie = async (imdbID: string) => {
+    const fav = await addFav(imdbID);
+    console.log("Favorite added:", fav);
+  };
   return (
     <Box px='3rem' py='2rem'>
       <form onSubmit={searchMovie}>
@@ -30,7 +37,7 @@ const MovieCard = () => {
           mb={2}
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder='serch movie here....'
+          placeholder='search movies here....'
         />
         <Button type='submit' ml='1rem' py='0.5rem'>Search</Button>
       </form>
@@ -71,14 +78,15 @@ const MovieCard = () => {
                     <Text fontWeight="semibold">{movie.title}</Text>
                     <Text fontSize="sm" color="gray.600">{movie.year} • {movie.type}</Text>
                   </Box>
-                      <Button
+                  <Button
                       size="sm"
                       my='1rem'
+                      onClick={()=>addForiteMovie(movie.imdbID)}
                       >
                         Add Favorite
-                      </Button>
-                  </Grid>
-                </Box>
+                  </Button>
+                </Grid>
+              </Box>
             )
           })}
         </Grid>

@@ -4,7 +4,7 @@ import { MdOutlineEmail } from "react-icons/md"
 import { CiLock } from "react-icons/ci"
 import { PasswordInput } from './../../../components/ui/password-input';
 import Link from "next/link";
-import useLogin from "./useLogin";
+import useLogin from "@/app/hooks/useLogin";
 
 const Login = () => {
     const {formik, isLoading} =useLogin()

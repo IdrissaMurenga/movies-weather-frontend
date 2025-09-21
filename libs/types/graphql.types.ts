@@ -51,3 +51,17 @@ export type FavMovie = {
         }
     }[]
 }
+
+export type AddFavType = {
+    addFavorite : {
+            movie :{
+                imdbID : string
+                title : string
+                year: string
+                type : string
+                poster : string
+            }
+        }
+}
+
+export type RemoveFavoriteData = { removeFavorite: boolean };
