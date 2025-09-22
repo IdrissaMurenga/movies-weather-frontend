@@ -1,6 +1,6 @@
 "use client"
 import { useState } from 'react'
-import { Box, Button, Container, Input, Grid, Image, VStack, Text,Skeleton } from '@chakra-ui/react'
+import { Box, Button, HStack, Input, Grid, Image, VStack, Text,Skeleton } from '@chakra-ui/react'
 import { SEARCH_MOVIES } from '@/libs/graphql'
 import { useQuery } from '@apollo/client/react'
 import useFavrite from '@/app/hooks/useFavrite'
@@ -29,20 +29,28 @@ const MovieCard = () => {
   };
   return (
     <Box px='3rem' py='2rem'>
-      <form onSubmit={searchMovie}>
-        <Input
-          type='text'
-          w='20rem'
-          mx='auto'
-          mb={2}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder='search movies here....'
-        />
-        <Button type='submit' ml='1rem' py='0.5rem'>Search</Button>
-      </form>
+      <HStack justifyContent={"center"}>
+        <form onSubmit={searchMovie}>
+            <Input
+              type='text'
+              w='20rem'
+              h="2.6rem"
+              mx='auto'
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder='search movies here........'
+            />
+            <Button type='submit' colorPalette={'blue'} ml='1rem' px="1.5rem" py='0.5rem'>Search</Button>
+        </form>
+      </HStack>
+      {!query && (
+        <Grid justifyContent="center" alignContent="center" pt="6rem">
+          <Image src="/movie-recorder-svgrepo-com.svg" alt="movie icon" w="8rem" mx="auto" />
+          <Text>Search for your favorite movies above and start exploring 🍿</Text>
+        </Grid>
+      )}
       {error && <Text color="red.500">Something went wrong.</Text>}
-            {loading && (
+      {loading && (
         <Grid templateColumns="repeat(4, 1fr)" gap={4}>
           {Array.from({ length: 8 }).map((_, i) => (
             <Box key={i} borderWidth="1px" rounded="md" overflow="hidden">
@@ -81,7 +89,8 @@ const MovieCard = () => {
                   <Button
                       size="sm"
                       my='1rem'
-                      onClick={()=>addForiteMovie(movie.imdbID)}
+                    onClick={() => addForiteMovie(movie.imdbID)}
+                    
                       >
                         Add Favorite
                   </Button>

@@ -32,13 +32,15 @@ const FavoriteList = () => {
                 </Grid>
             )}
             {favMovies.length === 0 ? 
-                <Box w={"20rem"} mx={"auto"} py="2rem">
+                <Grid w={"20rem"} mx="auto" justifyContent={"center"} py="2rem">
                     <Image src="/star.png" alt="star icon" w='9rem' mx={'auto'} />
                     <Text textAlign={"center"}> u have no favorite movies yet please serch movie and add as favorite</Text>
                     <Link href='/pages/movies'>
-                        <Text>search movies</Text>
+                        <Grid>
+                        <Button bgColor="blue.400" fontWeight='bold' color="white" my="2">search movies</Button>
+                        </Grid>
                     </Link>
-                </Box>
+                </Grid>
                 :
                 <Grid templateColumns="repeat(4, 1fr)" gap={4}>
                     {favMovies.map((fav) => (

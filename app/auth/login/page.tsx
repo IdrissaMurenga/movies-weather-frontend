@@ -1,5 +1,5 @@
 "use client"
-import { Grid, Field, Text, InputGroup, Input, Button } from "@chakra-ui/react"
+import { Grid, Field, Text, InputGroup, Input, Button, Heading, Image } from "@chakra-ui/react"
 import { MdOutlineEmail } from "react-icons/md"
 import { CiLock } from "react-icons/ci"
 import { PasswordInput } from './../../../components/ui/password-input';
@@ -11,7 +11,7 @@ const Login = () => {
     return (
         <Grid height='100vh' placeItems='center'>
             <form noValidate onSubmit={formik.handleSubmit}>
-                <Grid gap='20px' w='450px' bgColor='primary-bgColor' border='1px solid' borderColor='gray.800' p={4} alignItems='center' mx='auto' rounded='xl' >
+                <Grid gap='20px' w='450px' bgColor='primary-bgColor' border='1px solid' borderColor='gray.800' p={4} alignItems='center' mx='auto' rounded='xl'>
                     <Field.Root required>
                         <Field.Label>
                             <Text fontWeight='bold'>Email</Text>
@@ -60,9 +60,9 @@ const Login = () => {
                         loadingText='signing in and redirecting.....'
                         loading={isLoading}
                         type='submit' 
-                        bgColor='btn-bgColor'
+                        bgColor='blue.500'
                         color='text-primary'
-                        _hover={{ bgColor: 'teal.900' }}
+                        _hover={{ bgColor: 'blue.900' }}
                         fontWeight='bold' 
                         fontSize='text-base'
                     >
