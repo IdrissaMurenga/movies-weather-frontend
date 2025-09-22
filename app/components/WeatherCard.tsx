@@ -1,5 +1,6 @@
 "use client"
 import { GET_WEATHER } from "@/libs/graphql"
+import { GET_USER } from "@/libs/graphql";
 import { useQuery } from "@apollo/client/react"
 import {Box, Flex, HStack, VStack, Heading, Text, Badge, Image, Skeleton, IconButton
 } from "@chakra-ui/react";
@@ -32,8 +33,8 @@ const WeatherCard = () => {
     }
     if (error || !data) {
         return (
-            <Box p={6} bg="red.600" color="white" rounded="xl" shadow="xl">
-                Failed to load weather.
+            <Box p={6} bgGradient="to-l" gradientFrom=" blue.400" gradientTo="blackAlpha.100" color="white" rounded="xl" shadow="xl">
+                unable to load weather check your network
             </Box>
         );
     }
@@ -41,14 +42,14 @@ const WeatherCard = () => {
     const weather = data.getWeather
 
     return (
-      <Box p={6} bgColor={'#4444'} color="white" rounded="3xl" shadow="xl">
-        <Text mb={4} fontSize="sm" opacity={0.9}>
+      <Box p={6} bgGradient="to-l" gradientFrom=" blue.400" gradientTo="blackAlpha.100" color="white" rounded="3xl" shadow="xl">
+        <Text fontSize="sm" opacity={0.9}>
           {weather?.city ?? ""}
         </Text>
+        <Text fontSize="xs" mb={4} opacity={0.85}>{nowTime()}</Text>
         <HStack justify="space-between" align="start">
           <VStack gap={0} align="start">
             <Text fontSize="sm" opacity={0.9}>Current weather</Text>
-            <Text fontSize="xs" opacity={0.85}>{nowTime()}</Text>
           </VStack>
         </HStack>
         {weather ? (

@@ -32,7 +32,6 @@ const useLogin = () => {
                     password: values.password,
                     redirect: false,
                 })
-                console.log('signIn result:', res)
 
                 if (!res) {
                     toaster.create({
@@ -43,22 +42,11 @@ const useLogin = () => {
                     return;
                 }
                 if (res?.error) {
-                    if (res.error === "user not found") {
-                        toaster.create({
-                            title: "user not found",
-                            type: "error",
-                            duration: 3000,
-                        });
-                        return
-                    } else if (res.error === "incorrect password") {
-                        setFieldError("password", "incorrect password")
-                    } else {
-                        toaster.create({
-                            title: res.error,
+                    toaster.create({
+                            title: res.code,
                             type: "error",
                             duration:3000
-                        })
-                    }
+                    })
                     return
                 }
                 setDelayedLoading(true);

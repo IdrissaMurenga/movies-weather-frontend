@@ -1,6 +1,7 @@
 import { GetUserData, Weather, SearchMoviesData, SearchMoviesVars, FavMovie, AddFavType, RemoveFavoriteData } from "./types/graphql.types";
 import { gql, type TypedDocumentNode } from "@apollo/client";
 
+//QUERIES
 export const SIGNUP = gql`
     mutation Signup ($input: SignupInput!) {
         signup(input:$input){
@@ -9,6 +10,15 @@ export const SIGNUP = gql`
                 name
                 email
                 city
+                weather {
+                    city
+                    humidity
+                    windSpeed
+                    temp
+                    description
+                    iconUrl
+                    feelsLike
+                }
             }
             token
         }
@@ -72,7 +82,6 @@ export const FAVORITE_MOVIES:TypedDocumentNode<FavMovie> = gql`
 `
 
 // MUTATIONS
-
 export const ADD_FAVORITE:TypedDocumentNode<AddFavType> = gql`
     mutation AddFavorite ($imdbID:String!){
         addFavorite(imdbID:$imdbID) {
