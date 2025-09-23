@@ -19,8 +19,8 @@ const FavoriteList = () => {
         <Box>
             <Heading pb={4}>Your Favorite Movies</Heading>
             {loading && (
-                <Grid templateColumns="repeat(4, 1fr)" gap={4}>
-                    {Array.from({ length: 8 }).map((_, i) => (
+                <Grid templateColumns="repeat(5, 1fr)" gap={4}>
+                    {Array.from({ length: 10 }).map((_, i) => (
                     <Box key={i} borderWidth="1px" rounded="md" overflow="hidden">
                         <Skeleton h="240px" w="100%" />
                         <VStack align="start" p={2}>
@@ -42,27 +42,39 @@ const FavoriteList = () => {
                     </Link>
                 </Grid>
                 :
-                <Grid templateColumns="repeat(4, 1fr)" gap={4}>
+                <Grid templateColumns="repeat(5, 1fr)" gap={4}>
                     {favMovies.map((fav) => (
-                        <Box key={fav.movie.id}>
-                            {fav.movie.poster ? (
-                                <Image src={fav.movie.poster} alt={fav.movie.title} h="320px" border='2px solid' rounded='md' />
-                            ) : (
-                                <Text>No Poster</Text>
-                            )}
-                            <Grid gap={1}>
+                        <Box
+                            px={3}
+                            py={6}
+                            display="flex"
+                            flexDirection="column"
+                            key={fav.movie.id}
+                        >
+                            
+                            <Image
+                                src={fav.movie.poster ?? "/placeholder.png"}
+                                alt={fav.movie.title}
+                                h="320px"
+                                border='2px solid'
+                                objectFit="cover"
+                                rounded='md'
+                            />
+                            
                             <Box pt={2}>
                                 <Text fontWeight="semibold">{fav.movie.title}</Text>
                                 <Text fontSize="sm" color="gray.600">{fav.movie.year} • {fav.movie.type}</Text>
                             </Box>
-                                <Button
+                            <Box mt="auto" />
+                            <Button
                                 size="sm"
-                                    my='1rem'
-                                    onClick={()=>removeFavorite(fav.movie.imdbID)}
-                                >
+                                my='1rem'
+                                cursor="pointer"
+                                colorPalette="red"
+                                onClick={()=>removeFavorite(fav.movie.imdbID)}
+                            >
                                     remove Favorite
-                                </Button>
-                            </Grid>
+                            </Button>
                         </Box>
                     ))}
                 </Grid>

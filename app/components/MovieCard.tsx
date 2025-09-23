@@ -4,14 +4,17 @@ import { Box, Button, HStack, Input, Grid, Image, VStack, Text,Skeleton } from '
 import { SEARCH_MOVIES } from '@/libs/graphql'
 import { useQuery } from '@apollo/client/react'
 import useFavrite from '@/app/hooks/useFavrite'
+import { FaStar } from "react-icons/fa6";
 
 const MovieCard = () => {
   const [query, setQuery] = useState('')
   const [input, setInput] = useState('')
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const { addFav } = useFavrite()
     
   const { data, error, loading } = useQuery(SEARCH_MOVIES, {
     variables: { query, page: 1 },
+    fetchPolicy: "network-only", 
     skip: !query
   })
   
@@ -22,10 +25,15 @@ const MovieCard = () => {
     const query = input.trim()
     if (query.length < 2) return;
     setQuery(query)
+    setInput("")
   }
-    const addForiteMovie = async (imdbID: string) => {
+  const addForiteMovie = async (imdbID: string) => {
+    if (favorites.has(imdbID)) return;
     const fav = await addFav(imdbID);
-    console.log("Favorite added:", fav);
+
+    setFavorites((prev) => new Set([...prev, imdbID]));
+
+    return fav    
   };
   return (
     <Box px='3rem' py='2rem'>
@@ -51,8 +59,8 @@ const MovieCard = () => {
       )}
       {error && <Text color="red.500">Something went wrong.</Text>}
       {loading && (
-        <Grid templateColumns="repeat(4, 1fr)" gap={4}>
-          {Array.from({ length: 8 }).map((_, i) => (
+        <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={4} py={6}>
+          {Array.from({ length: 10 }).map((_, i) => (
             <Box key={i} borderWidth="1px" rounded="md" overflow="hidden">
               <Skeleton h="240px" w="100%" />
               <VStack align="start" p={2}>
@@ -70,31 +78,44 @@ const MovieCard = () => {
       )}
       {!loading && movies.length > 0 && (        
         <Grid
-          templateColumns={{ base: "1fr", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)", xl: "repeat(4, 1fr)" }}
+          templateColumns={{ base: "1fr", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }}
           gap={4}
         >
           {movies?.map((movie) => {
             return (
-              <Box key={movie.id}>
-                  {movie.poster ? (
-                    <Image src={movie.poster} alt={movie.title} h="320px" border='2px solid' rounded='md'  />
-                  ) : (
-                    <Box h="320px" bg="gray.100" />
-                  )}
-                <Grid gap={1}>
-                  <Box pt={2}>
-                    <Text fontWeight="semibold">{movie.title}</Text>
-                    <Text fontSize="sm" color="gray.600">{movie.year} • {movie.type}</Text>
-                  </Box>
-                  <Button
-                      size="sm"
-                      my='1rem'
-                    onClick={() => addForiteMovie(movie.imdbID)}
-                    
-                      >
-                        Add Favorite
-                  </Button>
-                </Grid>
+              <Box
+                px={3}
+                py={6}
+                display="flex"
+                flexDirection="column"
+                key={movie.id}
+              >
+                <Image
+                  src={movie.poster ?? "/placeholder.png"}
+                  alt={movie.title}
+                  w="100%"
+                  h="320px"
+                  objectFit="cover"
+                  border='2px solid'
+                  rounded='md'
+                />
+                
+                <Box pt={2}>
+                  <Text fontWeight="semibold">{movie.title}</Text>
+                  <Text fontSize="sm" color="gray.600">{movie.year} • {movie.type}</Text>
+                </Box>
+                <Box mt="auto" />
+                <Button
+                  size="sm"
+                  my='1rem'
+                  cursor={'pointer'}
+                  onClick={() => addForiteMovie(movie.imdbID)}
+                  colorPalette="blue"
+                  disabled={favorites.has(movie.imdbID)}
+                  bg={favorites.has(movie.imdbID) ? "yellow" : "blue"}
+                >
+                  Add Favorite
+                </Button>
               </Box>
             )
           })}

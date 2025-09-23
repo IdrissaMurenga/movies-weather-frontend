@@ -31,12 +31,10 @@ export type Movie = {
 export type SearchMoviesData = {
     searchMovies: {
         total: number;
+        page: number;
+        hasMore: boolean;
         movies: Movie[];
     };
-};
-export type SearchMoviesVars = {
-    query: string;
-    page?: number | null;
 };
 export type FavMovie = {
     favoriteMovies: {
