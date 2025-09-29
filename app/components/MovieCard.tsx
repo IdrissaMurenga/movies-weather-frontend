@@ -1,8 +1,9 @@
 "use client"
-import { useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Box, Button, HStack, Input, Grid, Image, VStack, Text,Skeleton } from '@chakra-ui/react'
 import { SEARCH_MOVIES } from '@/libs/graphql'
 import { useQuery } from '@apollo/client/react'
+import { NetworkStatus } from "@apollo/client";
 import useFavrite from '@/app/hooks/useFavrite'
 import { FaStar } from "react-icons/fa6";
 
@@ -12,13 +13,48 @@ const MovieCard = () => {
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const { addFav } = useFavrite()
     
-  const { data, error, loading } = useQuery(SEARCH_MOVIES, {
+  const { data, error, loading, networkStatus, fetchMore } = useQuery(SEARCH_MOVIES, {
     variables: { query, page: 1 },
     fetchPolicy: "network-only", 
     skip: !query
   })
   
   const movies = data?.searchMovies.movies ?? []
+
+  const hasMore: boolean = data?.searchMovies.hasMore ?? false;
+  const currentPage: number = data?.searchMovies.page ?? 1;
+
+    // Infinite scroll
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  const loadingMore = networkStatus === NetworkStatus.fetchMore; // 3
+
+  const onIntersect = useCallback(
+    async (entries: IntersectionObserverEntry[]) => {
+      const entry = entries[0];
+      if (!entry.isIntersecting) return;
+      if (!hasMore || !query) return;
+      if (loadingMore) return;
+
+      await fetchMore({
+        variables: { query, page: currentPage + 1 },
+        // no need to provide updateQuery due to cache field policy merge
+      });
+    },
+    [hasMore, query, currentPage, loadingMore, fetchMore]
+  );
+
+  useEffect(() => {
+    if (!loadMoreRef.current) return;
+
+    const observer = new IntersectionObserver(onIntersect, {
+      root: null,
+      rootMargin: "300px", // prefetch a bit earlier
+      threshold: 0,
+    });
+
+    observer.observe(loadMoreRef.current);
+    return () => observer.disconnect();
+  }, [onIntersect]);
   
   const searchMovie = (e: React.FormEvent) => {
     e.preventDefault()
@@ -59,7 +95,7 @@ const MovieCard = () => {
       )}
       {error && <Text color="red.500">Something went wrong.</Text>}
       {loading && (
-        <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={4} py={6}>
+        <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)", xl: "repeat(5, 1fr)" }} gap={4} py={6}>
           {Array.from({ length: 10 }).map((_, i) => (
             <Box key={i} borderWidth="1px" rounded="md" overflow="hidden">
               <Skeleton h="240px" w="100%" />

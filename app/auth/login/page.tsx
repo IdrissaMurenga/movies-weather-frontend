@@ -1,5 +1,5 @@
 "use client"
-import { Grid, Field, Text, InputGroup, Input, Button, Heading, Image } from "@chakra-ui/react"
+import { Grid, Field, Text, InputGroup, Input, Button, Flex } from "@chakra-ui/react"
 import { MdOutlineEmail } from "react-icons/md"
 import { CiLock } from "react-icons/ci"
 import { PasswordInput } from './../../../components/ui/password-input';
@@ -68,7 +68,12 @@ const Login = () => {
                     >
                         Sign in
                     </Button>
-                    <Text textAlign="center"> don't have an account ? <Link href='/auth/signup'>signup</Link></Text>
+                    <Flex gap={2} justifyContent="center">
+                        <Text> don't have an account ?</Text>
+                        <Link href='/auth/signup'>
+                            <Text color="blue.400">signup</Text>
+                        </Link>
+                    </Flex>
                 </Grid>
             </form>
         </Grid>

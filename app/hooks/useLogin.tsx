@@ -10,7 +10,7 @@ const useLogin = () => {
     const router = useRouter()
 
     // useState hook to manage loading state
-    const [delayedLoading, setDelayedLoading] = useState(false)
+    const [delayLoading, setDelayLoading] = useState(false)
 
     // useFormik hook from formik to manage form state and validation
     const formik = useFormik({
@@ -24,7 +24,7 @@ const useLogin = () => {
         }),
         
         // handleSubmit function to handle form submission
-        onSubmit: async (values, {setFieldError, setSubmitting, setStatus}) => {
+        onSubmit: async (values, {setSubmitting}) => {
             try {
                 // Auth.js Login Credentials provider
                 const res = await signIn("credentials", {
@@ -33,28 +33,32 @@ const useLogin = () => {
                     redirect: false,
                 })
 
+                // if no response or response fails
                 if (!res) {
                     toaster.create({
-                        title: "Login failed. Try again.",
+                        title: "Login failed. Try to login again.",
                         type: "error",
                         duration: 3000,
                     });
                     return;
                 }
+
+                // check if theres any error on login process or invalid credentials 
                 if (res?.error) {
                     toaster.create({
-                            title: res.code,
-                            type: "error",
-                            duration:3000
+                        title: res.code,
+                        type: "error",
+                        duration: 3000,
                     })
                     return
                 }
-                setDelayedLoading(true);
+                // if response is successfull set loading state and redirect to dashboard
+                setDelayLoading(true);
                 router.replace("/pages/dashboard");
             
             } catch (error) {
                 toaster.create({
-                    title: "Something went wrong. Try again.",
+                    title: "Something went wrong. Please Try again.",
                     type: "error",
                     duration:3000
                 })
@@ -63,7 +67,7 @@ const useLogin = () => {
             }
         },
     })
-    const isLoading = delayedLoading || formik.isSubmitting
+    const isLoading = delayLoading || formik.isSubmitting
     return { formik, isLoading }
 }
 

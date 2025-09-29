@@ -8,11 +8,11 @@ import { SIGNUP } from "@/libs/graphql"
 import { useMutation } from "@apollo/client/react"
 
 const useSignup = () => {
-    const [signup, { error, loading }] = useMutation(SIGNUP);
+    const [signup] = useMutation(SIGNUP);
     const router = useRouter()
     
     // useState hook to manage loading state
-    const [delayedLoading, setDelayedLoading] = useState(false)
+    const [delayLoading, setDelayLoading] = useState(false)
 
     const formik = useFormik({
         initialValues: {
@@ -29,7 +29,7 @@ const useSignup = () => {
         }),
         onSubmit: async (values) => {
             
-            const { data }=await signup({
+            const { data } = await signup({
                 variables: { input: values }
             })
 
@@ -40,12 +40,12 @@ const useSignup = () => {
             })
 
             if (res.ok) {
-                setDelayedLoading(true);
+                setDelayLoading(true);
                 router.replace("/pages/dashboard");
             }
         }
     })
-    const isLoading = delayedLoading || formik.isSubmitting
+    const isLoading = delayLoading || formik.isSubmitting
 
     return { formik, isLoading }
 }

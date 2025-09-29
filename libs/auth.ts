@@ -2,10 +2,11 @@ import NextAuth, { CredentialsSignin } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
 class InvalidLoginError extends CredentialsSignin {
-  code = "Invalid identifier or  incorrect password"
+  code = "Incorrect password or invalid credentials"
 }
 
 const GRAPHQL_URI = process.env.GRAPHQL_URI as string
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     Credentials({

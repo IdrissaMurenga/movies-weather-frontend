@@ -1,15 +1,26 @@
 "use client"
+import { useState } from "react"
 import Link from "next/link"
 import { GET_USER } from "@/libs/graphql"
 import { signOut } from "next-auth/react"
 import { usePathname } from "next/navigation"
 import { useQuery } from "@apollo/client/react"
 import { RiLogoutCircleRLine } from "react-icons/ri"
-import { Avatar, Container, Flex, HStack, Text, Button, SkeletonCircle, Image, Heading } from "@chakra-ui/react"
+import { GiHamburgerMenu } from "react-icons/gi";
+import { IoCloseCircle } from "react-icons/io5";
+import { Avatar, Container, Box, HStack, Text, Button, SkeletonCircle, Image, Heading, IconButton } from "@chakra-ui/react"
+
+
+const linkItem = [
+    {name: "Dashboard", href: "/pages/dashboard" },
+    {name: "Movies", href: "/pages/movies" }
+]
 
 const Navbar = () => {
+    const [open, setOpen] = useState(false);
     const pathname = usePathname()
     const { data, loading } = useQuery(GET_USER)
+    const isActive = (href: string) => pathname === href
     
     const user = data?.me
     
@@ -19,35 +30,49 @@ const Navbar = () => {
         })
     }
 
-    const isActive = (href: string) => pathname === href
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleOpen = () => {
+        setOpen(true);
+    };
     
     return (
         <Container>
-            <HStack py={2} px={4} bgColor={'#4444'} alignItems={'center'} justifyContent={'space-between'} rounded={'full'}>
-                <HStack gap={12}>
-                    <HStack> 
-                        <Image src="/logo.png" alt="logo image" w="6rem" />
-                        <Heading>Movies Weather App</Heading>
-                    </HStack>
-                    <HStack gap={6} p={2} rounded='full' bgColor={"black"} pr={"23rem"}>
-                        <Link href='/pages/dashboard'>
-                            <Text
-                                bgColor={isActive("/pages/dashboard") ? "blue.600" : "black"}
-                                px={2} py={1}
-                                rounded='full'
-                            >
-                                Dashnoard
-                            </Text>
-                        </Link>
-                        <Link href='/pages/movies'>
-                            <Text
-                                bgColor={isActive("/pages/movies") ? "blue.600" : "black"}
-                                rounded='full'
-                                px={2} py={1}
-                            >
-                                Movies
-                            </Text>
-                        </Link>
+            <HStack p={2} bgColor={'#4444'} alignItems={'center'} justifyContent={'space-between'} rounded={'2xl'}>
+                <Box display={{ lg: 'none' }}>
+                    <IconButton onClick={open ? handleClose : handleOpen} variant='plain' size='md'>
+                        {open ? <IoCloseCircle /> : <GiHamburgerMenu />}
+                    </IconButton>
+                </Box>
+                <HStack> 
+                    <Image src="/logo.png" alt="logo image" w="4rem" />
+                    <Heading>CineCast</Heading>
+                </HStack>
+                <HStack>
+                    <HStack
+                        p={2} 
+                        rounded='2xl'
+                        bgColor={"black"}
+                        display={{ base: 'none', lg: 'flex' }}
+                        justifyContent="space-evenly"
+                        w={{ md: "1rem", lg: "26rem" }}
+                    >
+                        {linkItem.map((link) => (
+                            
+                            <Link href={link.href} key={link.name}>
+                                <Text
+                                    bgColor={isActive(link.href) ? "blue.600" : 'black'}
+                                    py={1} px={2}
+                                    rounded="2xl"
+                                    textAlign={"center"}
+                                >
+                                        {link.name}
+                                </Text>
+                            </Link>
+                            
+                        ))}
                     </HStack>
                 </HStack>
                 <HStack>

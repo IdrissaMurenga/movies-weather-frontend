@@ -42,7 +42,7 @@ const WeatherCard = () => {
     const weather = data.getWeather
 
     return (
-      <Box p={6} bgGradient="to-l" gradientFrom=" blue.400" gradientTo="blackAlpha.100" color="white" rounded="3xl" shadow="xl">
+      <Box p={6} bgGradient="to-l" gradientFrom=" blue" gradientTo="blackAlpha.400" color="white" rounded="3xl" shadow="xl" w={{md: "38rem", lg: "100%"}}>
         <Text fontSize="sm" opacity={0.9}>
           {weather?.city ?? ""}
         </Text>
