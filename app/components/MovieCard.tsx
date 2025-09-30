@@ -72,7 +72,7 @@ const MovieCard = () => {
     return fav    
   };
   return (
-    <Box px='3rem' py='2rem'>
+    <Box py='2rem'>
       <HStack justifyContent={"center"}>
         <form onSubmit={searchMovie}>
             <Input
@@ -127,7 +127,7 @@ const MovieCard = () => {
                 key={movie.id}
               >
                 <Image
-                  src={movie.poster ?? "/placeholder.png"}
+                  src={movie.poster ? movie.poster : "/placeholder.png"}
                   alt={movie.title}
                   w="100%"
                   h="320px"

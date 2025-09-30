@@ -8,7 +8,7 @@ import { useQuery } from "@apollo/client/react"
 import { RiLogoutCircleRLine } from "react-icons/ri"
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseCircle } from "react-icons/io5";
-import { Avatar, Container, Box, HStack, Text, Button, SkeletonCircle, Image, Heading, IconButton } from "@chakra-ui/react"
+import { Avatar, Container, Box, HStack, Text, Button, SkeletonCircle, Image, Heading, IconButton, Stack } from "@chakra-ui/react"
 
 
 const linkItem = [
@@ -39,14 +39,14 @@ const Navbar = () => {
     };
     
     return (
-        <Container>
+        <Stack>
             <HStack p={2} bgColor={'#4444'} alignItems={'center'} justifyContent={'space-between'} rounded={'2xl'}>
-                <Box display={{ lg: 'none' }}>
-                    <IconButton onClick={open ? handleClose : handleOpen} variant='plain' size='md'>
-                        {open ? <IoCloseCircle /> : <GiHamburgerMenu />}
-                    </IconButton>
-                </Box>
                 <HStack> 
+                    <Box display={{ lg: 'none' }}>
+                        <IconButton onClick={open ? handleClose : handleOpen} variant='plain' size='md'>
+                            {open ? <IoCloseCircle /> : <GiHamburgerMenu />}
+                        </IconButton>
+                    </Box>
                     <Image src="/logo.png" alt="logo image" w="4rem" />
                     <Heading>CineCast</Heading>
                 </HStack>
@@ -68,7 +68,7 @@ const Navbar = () => {
                                     rounded="2xl"
                                     textAlign={"center"}
                                 >
-                                        {link.name}
+                                    {link.name}
                                 </Text>
                             </Link>
                             
@@ -89,7 +89,23 @@ const Navbar = () => {
                     </Button>
                 </HStack>
             </HStack>
-        </Container>
+            {open ? (                
+                <Stack display={{ lg: 'none' }}>
+                    {linkItem.map((link) => (
+                        <Link href={link.href} key={link.name}>
+                            <Text
+                                bgColor={isActive(link.href) ? "blue.600" : 'black'}
+                                py={1} px={2}
+                                rounded="2xl"
+                                textAlign={"center"}
+                            >
+                                {link.name}
+                            </Text>
+                        </Link>
+                    ))}
+                </Stack>
+            ) : ''}
+        </Stack>
     )
 }
 

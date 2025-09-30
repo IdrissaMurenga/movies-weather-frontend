@@ -5,6 +5,7 @@ import { ApolloProvider } from "@apollo/client/react";
 // apollo link
 const httpLink = new HttpLink({
     uri: "/api/graphql", // get next.js proxy router
+    credentials: "include",
     fetchOptions: { cache: "no-store" } // prevent Next.js from caching requests
 });
 

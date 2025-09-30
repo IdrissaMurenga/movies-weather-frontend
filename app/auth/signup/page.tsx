@@ -1,5 +1,5 @@
 "use client"
-import { Grid, Field, Text, InputGroup, Input, Button } from "@chakra-ui/react"
+import { Grid, Field, Text, InputGroup, Input, Button, Flex } from "@chakra-ui/react"
 import { MdOutlineEmail } from "react-icons/md"
 import { PasswordInput } from "@/components/ui/password-input"
 import { CiLock } from "react-icons/ci"
@@ -14,7 +14,7 @@ const Signup = () => {
     return (
         <Grid height='100vh' placeItems='center'>
             <form noValidate onSubmit={handleSubmit}>
-                <Grid gap='20px' bgColor='primary-bgColor' border='1px solid' borderColor='gray.800' w='450px' p={4} alignItems='center' mx='auto' rounded='xl'>                
+                <Grid gap='20px' bgColor='primary-bgColor' border='1px solid' borderColor='gray.800' w='450px' p={4} alignItems='center' mx='auto' rounded='xl'>
                     <Field.Root required>
                         <Field.Label>
                             <Text fontWeight='bold'>name</Text>
@@ -29,8 +29,12 @@ const Signup = () => {
                                 onBlur={handleBlur}
                                 placeholder='user name'
                                 h='48px'
+                                border={touched.name && errors.name ? '1px solid red' : ''}
                             />
                         </InputGroup>
+                        {touched.name && errors.name && (
+                            <Text color="red" fontSize='0.8rem'>{errors.name}</Text>
+                        )} 
                     </Field.Root>
                     
                     <Field.Root required>
@@ -47,8 +51,12 @@ const Signup = () => {
                                 onBlur={handleBlur}
                                 placeholder='Enter your email'
                                 h='48px'
+                                border={touched.email && errors.email ? '1px solid red' : ''}
                             />
                         </InputGroup>
+                        {touched.email && errors.email && (
+                            <Text color="red" fontSize='0.8rem'>{errors.email}</Text>
+                        )} 
                     </Field.Root>
         
                     <Field.Root required>
@@ -64,8 +72,12 @@ const Signup = () => {
                                 onBlur={handleBlur}
                                 placeholder='************'
                                 h='48px'
+                                border={touched.password && errors.password ? '1px solid red' : ''}
                             />
                         </InputGroup>
+                        {touched.password && errors.password && (
+                            <Text color="red" fontSize='0.8rem'>{errors.password}</Text>
+                        )} 
                     </Field.Root>
                     <Field.Root required>
                         <Field.Label>
@@ -80,23 +92,32 @@ const Signup = () => {
                                 value={values.city}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
+                                border={touched.city && errors.city ? '1px solid red' : ''}
                             />
                         </InputGroup>
+                        {touched.city && errors.city && (
+                            <Text color="red" fontSize='0.8rem'>{errors.city}</Text>
+                        )} 
                     </Field.Root>
 
                     <Button
                         loadingText='signing up.....'
                         loading={isLoading}
-                        bgColor='btn-bgColor'
+                        bgColor='blue.500'
                         color='text-primary'
-                        _hover={{ bgColor: 'teal.900' }}
+                        _hover={{ bgColor: 'blue.900' }}
                         type='submit'
                         fontSize='text-base'
                         cursor='pointer'
                     >
                         Sign up
                     </Button>
-                    <Text textAlign="center"> do you have an account? <Link href='/'>login</Link></Text>
+                    <Flex gap={2} justifyContent="center">
+                        <Text> already have an account ?</Text>
+                        <Link href='/auth/signup'>
+                            <Text color="blue.400">login</Text>
+                        </Link>
+                    </Flex>
                 </Grid>
             </form>
         </Grid>

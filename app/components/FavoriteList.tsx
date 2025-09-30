@@ -19,7 +19,7 @@ const FavoriteList = () => {
         <Box>
             <Heading pb={4}>Your Favorite Movies</Heading>
             {loading && (
-                <Grid templateColumns="repeat(5, 1fr)" gap={4}>
+                <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={4}>
                     {Array.from({ length: 10 }).map((_, i) => (
                     <Box key={i} borderWidth="1px" rounded="md" overflow="hidden">
                         <Skeleton h="240px" w="100%" />
@@ -42,7 +42,7 @@ const FavoriteList = () => {
                     </Link>
                 </Grid>
                 :
-                <Grid templateColumns="repeat(5, 1fr)" gap={4}>
+                <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={4}>
                     {favMovies.map((fav) => (
                         <Box
                             px={3}

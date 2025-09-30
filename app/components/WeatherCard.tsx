@@ -21,10 +21,12 @@ function nowTime() {
 
 const WeatherCard = () => {
     const { data, error, loading } = useQuery(GET_WEATHER)
+    const { data: user } = useQuery(GET_USER)
     
     if (loading) {
         return (
             <Box p={6} bgGradient="linear(to-b, blue.700, blue.800)" color="white" rounded="xl" shadow="xl">
+                <Skeleton h="24px" w="160px" mb={3} />
                 <Skeleton h="24px" w="160px" mb={3} />
                 <Skeleton h="80px" w="70%" mb={3} />
                 <Skeleton h="18px" w="60%" />
@@ -32,17 +34,32 @@ const WeatherCard = () => {
         );
     }
     if (error || !data) {
-        return (
-            <Box p={6} bgGradient="to-l" gradientFrom=" blue.400" gradientTo="blackAlpha.100" color="white" rounded="xl" shadow="xl">
+      return (
+          <Box
+            p={6} bgGradient="to-r"
+            gradientFrom=" #1e3c72"
+            gradientTo=" #87CEEB"
+            gradientVia="#2a5298"
+            color="white" rounded="xl" shadow="xl"
+          >
                 unable to load weather check your network
-            </Box>
-        );
+          </Box>
+      );
     }
 
-    const weather = data.getWeather
+  const weather = data.getWeather
+  const userName = user?.me.name
 
-    return (
-      <Box p={6} bgGradient="to-l" gradientFrom=" blue" gradientTo="blackAlpha.400" color="white" rounded="3xl" shadow="xl" w={{md: "38rem", lg: "100%"}}>
+  return (
+    <>
+      <Heading>Welcome {userName}</Heading>
+      <Box p={6}
+        bgGradient="to-r"
+        gradientFrom=" #1e3c72"
+        gradientTo=" #87CEEB" gradientVia="#2a5298"
+        color="white" rounded="3xl"
+        shadow="xl"
+      >
         <Text fontSize="sm" opacity={0.9}>
           {weather?.city ?? ""}
         </Text>
@@ -86,6 +103,7 @@ const WeatherCard = () => {
           <Text mt={4}>No weather yet — set your city in profile.</Text>
         )}
       </Box>
+    </>  
     )
 }
 

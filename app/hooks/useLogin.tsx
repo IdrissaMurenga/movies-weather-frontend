@@ -47,7 +47,7 @@ const useLogin = () => {
                 if (res?.error) {
                     toaster.create({
                         title: res.code,
-                        type: "error",
+                        type: res.code,
                         duration: 3000,
                     })
                     return
