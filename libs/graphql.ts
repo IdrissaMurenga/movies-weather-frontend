@@ -69,7 +69,6 @@ export const FAVORITE_MOVIES:TypedDocumentNode<FavMovie> = gql`
                 year
                 type
             }
-            createdAt
         }
     }
 

@@ -139,7 +139,7 @@ const MovieCard = () => {
                   size="sm"
                   my='1rem'
                   onClick={() => addFavoriteMovie(movie.imdbID)}
-                  colorPalette={fav.has(movie.imdbID) ? "yellow" : "blue"}
+                  colorPalette={fav.has(movie.imdbID) ? "green" : "blue"}
                   disabled={fav.has(movie.imdbID)}
                 >
                   {fav.has(movie.imdbID) ? 'Added to Favorites' : 'Add to Favorites'}

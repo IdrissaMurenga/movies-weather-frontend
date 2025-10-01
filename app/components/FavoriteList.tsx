@@ -10,6 +10,7 @@ const FavoriteList = () => {
     const { removeFav } = useFavorite()
 
     const favMovies = [...(data?.favoriteMovies ?? [])].reverse()
+    console.log("fav movies: ", favMovies)
 
     const removeFavorite = async (imdbID: string) => {
         const remove = await removeFav(imdbID)

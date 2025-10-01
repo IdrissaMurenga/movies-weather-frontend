@@ -130,7 +130,7 @@ const useMovies = () => {
         }
     }
 
-    return {data, movies, hasMore, error, loading, input, query, fav, setInput, searchMovies, loadingMore,loadMoreRef, addFavoriteMovie }
+    return {data, movies, error, loading, input, query, fav,setInput, searchMovies, loadingMore, loadMoreRef, hasMore, addFavoriteMovie }
 }
 
 export default useMovies
