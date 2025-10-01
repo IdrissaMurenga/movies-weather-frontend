@@ -9,6 +9,7 @@ import useFavorite from "./useFavrite"
 const useMovies = () => {
     const [query, setQuery] = useState('');
     const [input, setInput] = useState('');
+    const [hydrated, setHydrated] = useState(false);
     const [loadingMore, setLoadingMore] = useState(false);
     const [fav, setFav] = useState<Set<string>>(new Set());
     const { addFav } = useFavorite()
@@ -130,7 +131,40 @@ const useMovies = () => {
         }
     }
 
-    return {data, movies, error, loading, input, query, fav,setInput, searchMovies, loadingMore, loadMoreRef, hasMore, addFavoriteMovie }
+    // persist searched movies on browser after refresh
+    useEffect(() => {
+        // First run after mount: mark hydrated and restore once
+        if (!hydrated) {
+            setHydrated(true);
+            const saved = localStorage.getItem("lastSearchQuery");
+            if (saved) setQuery(saved);
+            return; // stop here on the first run
+        }
+
+        // Subsequent runs (after hydration): persist changes
+        if (query) {
+            localStorage.setItem("lastSearchQuery", query);
+        } else {
+            localStorage.removeItem("lastSearchQuery");
+        }
+}, [hydrated, query]);
+
+    return {
+        data,
+        movies,
+        error,
+        loading,
+        input,
+        query,
+        fav,
+        hydrated,
+        loadingMore,
+        loadMoreRef,
+        hasMore,
+        setInput,
+        searchMovies,
+        addFavoriteMovie
+    }
 }
 
 export default useMovies

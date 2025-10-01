@@ -10,53 +10,31 @@ import { toaster } from '@/components/ui/toaster';
 import useMovies from "../hooks/useMovies";
 
 const MovieCard = () => {
-  const { data, movies, input, query,loading, error, setInput, searchMovies, loadingMore, loadMoreRef, fav, addFavoriteMovie, hasMore } = useMovies();
+  const { data, movies, input, query,loading, error, setInput, searchMovies, loadingMore, loadMoreRef, fav, addFavoriteMovie, hasMore, hydrated } = useMovies();
 
-  const [isMounted, setIsMounted] = useState(false);
-
-  // // Save search query to localStorage
-  // useEffect(() => {
-  //   if (query) {
-  //     localStorage.setItem('lastSearchQuery', query);
-  //   }
-  // }, [query]);
-
-  // const clearSearch = () => {
-  //   setQuery('');
-  //   localStorage.removeItem('lastSearchQuery');
-  // }
-
-  // // Handle localStorage after mount
-  // useEffect(() => {
-  //   setIsMounted(true);
-  //   const savedQuery = localStorage.getItem('lastSearchQuery');
-  //   if (savedQuery) {
-  //     setQuery(savedQuery);
-  //   }
-  // }, []);
-
-  // // Skip rendering content until mounted
-  // if (!isMounted) {
-  //   return (
-  //     <Box py='2rem'>
-  //       <HStack justifyContent={"center"}>
-  //         <form>
-  //           <Input
-  //             type='text'
-  //             w='20rem'
-  //             h="2.6rem"
-  //             mx='auto'
-  //             disabled
-  //             placeholder='Loading...'
-  //           />
-  //           <Button disabled ml='1rem' px="1.5rem" py='0.5rem'>
-  //             Search
-  //           </Button>
-  //         </form>
-  //       </HStack>
-  //     </Box>
-  //   );
-  // }
+  // Skip rendering content until mounted
+  if (!hydrated) {
+    return (
+      <Box py='2rem'>
+        <HStack justifyContent={"center"}>
+          <form>
+            <Input
+              type='text'
+              w='20rem'
+              h="2.6rem"
+              mx='auto'
+              disabled
+              placeholder='Loading...'
+              value={input}
+            />
+            <Button disabled ml='1rem' px="1.5rem" py='0.5rem'>
+              Search
+            </Button>
+          </form>
+        </HStack>
+      </Box>
+    );
+  }
 
   return (
     <Box py='2rem'>
