@@ -9,7 +9,7 @@ const FavoriteList = () => {
     const { data, loading, error } = useQuery(FAVORITE_MOVIES)
     const { removeFav } = useFavorite()
 
-    const favMovies = data?.favoriteMovies ?? []
+    const favMovies = [...(data?.favoriteMovies ?? [])].reverse()
 
     const removeFavorite = async (imdbID: string) => {
         const remove = await removeFav(imdbID)
@@ -31,7 +31,7 @@ const FavoriteList = () => {
                     ))}
                 </Grid>
             )}
-            {favMovies.length === 0 ? 
+            {favMovies.length === 0 && !loading ? 
                 <Grid w={"20rem"} mx="auto" justifyContent={"center"} py="2rem">
                     <Image src="/star.png" alt="star icon" w='9rem' mx={'auto'} />
                     <Text textAlign={"center"}> u have no favorite movies yet please serch movie and add as favorite</Text>
