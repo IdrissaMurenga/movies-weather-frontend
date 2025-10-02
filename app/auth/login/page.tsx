@@ -1,81 +1,26 @@
-"use client"
-import { Grid, Field, Text, InputGroup, Input, Button, Flex } from "@chakra-ui/react"
-import { MdOutlineEmail } from "react-icons/md"
-import { CiLock } from "react-icons/ci"
-import { PasswordInput } from './../../../components/ui/password-input';
-import Link from "next/link";
-import useLogin from "@/app/hooks/useLogin";
+import { Grid, Image, Box } from '@chakra-ui/react';
+import LoginForm from './LoginForm';
 
 const Login = () => {
-    const {formik, isLoading} =useLogin()
-    return (
-        <Grid height='100vh' placeItems='center'>
-            <form noValidate onSubmit={formik.handleSubmit}>
-                <Grid gap='20px' w='450px' bgColor='primary-bgColor' border='1px solid' borderColor='gray.800' p={4} alignItems='center' mx='auto' rounded='xl'>
-                    <Field.Root required>
-                        <Field.Label>
-                            <Text fontWeight='bold'>Email</Text>
-                            <Field.RequiredIndicator />
-                        </Field.Label>
-                        <InputGroup flex='1' startElement={<MdOutlineEmail size='16' />}>
-                            <Input
-                                type='email'
-                                name='email'
-                                value={formik.values.email}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                placeholder='Enter your email'
-                                h='48px'
-                                border={formik.touched.email && formik.errors.email ? '1px solid red' : ''}
-                            />
-                        </InputGroup>
-                        {formik.touched.email && formik.errors.email && (
-                            <Text color="red" fontSize='0.8rem'>{formik.errors.email}</Text>
-                        )} 
-                    </Field.Root>
-        
-                    <Field.Root required>
-                        <Field.Label>
-                            <Text fontWeight='bold'>Password</Text>
-                            <Field.RequiredIndicator />
-                        </Field.Label>
 
-                        <InputGroup flex='1' startElement={<CiLock size='16' color='text-third' />}>
-                            <PasswordInput
-                                name="password"
-                                value={formik.values.password}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                placeholder='************'
-                                h='48px'
-                                border={formik.touched.password && formik.errors.password ? '1px solid red' : ''}
-                            />
-                        </InputGroup>
-                        {formik.touched.password && formik.errors.password && (
-                            <Text color="red" fontSize='0.8rem'>{formik.errors.password}</Text> 
-                        )} 
-                    </Field.Root>
-                    <Button
-                        disabled={isLoading}
-                        loadingText='signing in and redirecting.....'
-                        loading={isLoading}
-                        type='submit' 
-                        bgColor='blue.500'
-                        color='text-primary'
-                        _hover={{ bgColor: 'blue.900' }}
-                        fontWeight='bold' 
-                        fontSize='text-base'
-                    >
-                        Sign in
-                    </Button>
-                    <Flex gap={2} justifyContent="center">
-                        <Text> don't have an account ?</Text>
-                        <Link href='/auth/signup'>
-                            <Text color="blue.400">signup</Text>
-                        </Link>
-                    </Flex>
-                </Grid>
-            </form>
+    return (
+        <Grid minH="100dvh" placeItems="center" px={4} >
+            <Box position="relative">
+                <Image
+                    src="/deadpool.png"
+                    alt="Deadpool"
+                    position="absolute"
+                    top={{ base: -16, sm:-30, md: -44 }}
+                    // left="50%"
+                    // transform="translateX(-50%)"
+                    w={{ base: "14rem", sm: "28rem", md: "30rem" }}
+                    // objectFit="contain"
+                    // pointerEvents="none"
+                    zIndex={-1}
+                    draggable={false}
+                />
+                <LoginForm />
+            </Box>
         </Grid>
     )
 }

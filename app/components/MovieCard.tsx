@@ -1,12 +1,5 @@
 "use client"
-import { useCallback, useEffect, useRef, useState } from "react";
 import { Box, Button, HStack, Input, Grid, Image, VStack, Text, Skeleton } from '@chakra-ui/react'
-import { SEARCH_MOVIES } from '@/libs/graphql'
-import { useQuery } from '@apollo/client/react'
-import { NetworkStatus } from "@apollo/client";
-import useFavrite from '@/app/hooks/useFavrite'
-import { FaStar } from "react-icons/fa6";
-import { toaster } from '@/components/ui/toaster';
 import useMovies from "../hooks/useMovies";
 
 const MovieCard = () => {
