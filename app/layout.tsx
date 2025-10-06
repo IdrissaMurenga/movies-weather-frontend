@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Provider } from "@/components/ui/provider";
 import { Toaster } from "@/components/ui/toaster";
 import { Apollo } from "@/libs/Apollo";
+import { Box } from "@chakra-ui/react";
 
 export const metadata: Metadata = {
   title: "Movies Weather App",
@@ -18,7 +19,7 @@ export default function RootLayout({
       <body>
         <Apollo>
           <Provider>
-            {children}
+              {children}
             <Toaster />
           </Provider>
         </Apollo>

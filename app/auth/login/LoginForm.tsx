@@ -1,5 +1,5 @@
 "use client"
-import { Grid, Field, Text, InputGroup, Input, Button, Flex } from "@chakra-ui/react"
+import { Grid, Field, Text, InputGroup, Input, Button, Flex, Span, Heading } from "@chakra-ui/react"
 import { MdOutlineEmail } from "react-icons/md"
 import { CiLock } from "react-icons/ci"
 import { PasswordInput } from './../../../components/ui/password-input';
@@ -7,11 +7,18 @@ import Link from "next/link";
 import useLogin from "@/app/hooks/useLogin";
 
 const LoginForm = () => {
-    const {formik, isLoading} =useLogin()
+    const {formik, isLoading} = useLogin()
     return (
-        <form noValidate onSubmit={formik.handleSubmit}>
-            <Grid gap='20px' w={{sm: "350px", md:'450px'}} bgColor='primary-bgColor' border='1px solid' borderColor='gray.800' p={4} alignItems='center' rounded='xl'>
-                <Field.Root required>
+        <Grid
+            w={{ sm: "350px", md: '450px' }}
+            border='1px solid'
+            borderColor='cardBorder'
+            p={6} alignItems='center'
+            rounded='2xl'
+        >
+            <Heading textAlign="center" pb={6}>Welcome to CineCast Login to continue</Heading>
+            <form noValidate onSubmit={formik.handleSubmit}>
+                <Field.Root required mb={6}>
                     <Field.Label>
                         <Text fontWeight='bold'>Email</Text>
                         <Field.RequiredIndicator />
@@ -23,17 +30,20 @@ const LoginForm = () => {
                             value={formik.values.email}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            placeholder='Enter your email'
+                            placeholder='Enter your email.......'
                             h='48px'
-                            border={formik.touched.email && formik.errors.email ? '1px solid red' : ''}
+                            outline="none"
+                            bgColor="inputBg"
+                            border="none"
+                            borderBottom={formik.touched.email && formik.errors.email ? '1px solid red' : 'transparent'}
                         />
                     </InputGroup>
                     {formik.touched.email && formik.errors.email && (
                         <Text color="red" fontSize='0.8rem'>{formik.errors.email}</Text>
-                    )} 
+                    )}
                 </Field.Root>
-    
-                <Field.Root required>
+        
+                <Field.Root required mb={6}>
                     <Field.Label>
                         <Text fontWeight='bold'>Password</Text>
                         <Field.RequiredIndicator />
@@ -45,36 +55,38 @@ const LoginForm = () => {
                             value={formik.values.password}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
+                            outline="none"
                             placeholder='************'
                             h='48px'
-                            border={formik.touched.password && formik.errors.password ? '1px solid red' : ''}
+                            bgColor="inputBg"
+                            border="none"
+                            borderBottom={formik.touched.password && formik.errors.password ? '1px solid red' : 'transparent'}
                         />
                     </InputGroup>
                     {formik.touched.password && formik.errors.password && (
                         <Text color="red" fontSize='0.8rem'>{formik.errors.password}</Text> 
                     )} 
                 </Field.Root>
-                <Button
-                    disabled={isLoading}
-                    loadingText='signing in and redirecting.....'
-                    loading={isLoading}
-                    type='submit' 
-                    bgColor='#b90f32'
-                    color='text-primary'
-                    _hover={{ bgColor: '#76091f' }}
-                    fontWeight='bold' 
-                    fontSize='text-base'
-                >
-                    Sign in
-                </Button>
-                <Flex gap={2} justifyContent="center">
-                    <Text> create an account ?</Text>
-                    <Link href='/auth/signup'>
-                        <Text color="blue.400">click here</Text>
-                    </Link>
-                </Flex>
-            </Grid>
-        </form>
+                <Grid>
+                    <Button
+                        disabled={isLoading}
+                        loadingText="signing in and redirecting....."
+                        loading={isLoading}
+                        type="submit"
+                    >
+                        Login
+                    </Button>
+                </Grid>
+                <Link href='/auth/signup'>
+                    <Text textAlign="center" pt={4} color="gray.300">
+                        don't have an account?
+                        <Span color="#ba0505ff" pl={2}>
+                            Create here
+                        </Span>
+                    </Text>
+                </Link>
+            </form>
+        </Grid>
     )
 }
 

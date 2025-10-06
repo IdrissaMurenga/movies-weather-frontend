@@ -1,4 +1,4 @@
-import { Grid, Image, Box } from '@chakra-ui/react';
+import { Grid, Image, Box, Heading } from '@chakra-ui/react';
 import LoginForm from './LoginForm';
 
 const Login = () => {
@@ -9,14 +9,8 @@ const Login = () => {
                 <Image
                     src="/deadpool.png"
                     alt="Deadpool"
-                    position="absolute"
-                    top={{ base: -16, sm:-30, md: -44 }}
-                    // left="50%"
-                    // transform="translateX(-50%)"
-                    w={{ base: "14rem", sm: "28rem", md: "30rem" }}
-                    // objectFit="contain"
-                    // pointerEvents="none"
-                    zIndex={-1}
+                    w={{ base: "24rem", sm: "28rem", md: "27rem" }}
+                    mx="auto"
                     draggable={false}
                 />
                 <LoginForm />
