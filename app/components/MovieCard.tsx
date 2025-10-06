@@ -1,5 +1,5 @@
 "use client"
-import { Box, Button, HStack, Input, Grid, Image, VStack, Text, Skeleton } from '@chakra-ui/react'
+import { Box, Button, HStack, Input, Grid, Image, VStack, Text, Skeleton, Heading } from '@chakra-ui/react'
 import useMovies from "../hooks/useMovies";
 
 const MovieCard = () => {
@@ -36,13 +36,12 @@ const MovieCard = () => {
           <Input
             type='text'
             w='20rem'
-            h="2.6rem"
             mx='auto'
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder='search your best movies here........'
+            placeholder='search your best movies here....'
           />
-          <Button type='submit' colorPalette={'blue'} ml='1rem' px="1.5rem" py='0.5rem'>
+          <Button type='submit' ml='1rem' size={"md"} px="1.5rem">
             Search
           </Button>
         </form>
@@ -50,9 +49,9 @@ const MovieCard = () => {
 
       {/* show friendly message when no query entered by user */}
       {!query && (
-        <Grid justifyContent="center" alignContent="center" pt="6rem">
-          <Image src="/movie-recorder-svgrepo-com.svg" alt="movie icon" w="8rem" mx="auto" />
-          <Text>Search for your favorite movies above and start exploring 🍿</Text>
+        <Grid justifyContent="center" alignContent="center" pt={2}>
+          <Image src="/deadpool4.png" alt="movie icon" w="20rem" mx="auto" />
+          <Heading>Search for your favorite movies above and start exploring 🍿</Heading>
         </Grid>
       )}
 
@@ -76,8 +75,6 @@ const MovieCard = () => {
       {!loading && query && movies.length === 0 && (
         <Text>No movies found for "{query}".</Text>
       )}
-
-      {/* {movies.length > 0 && (         */}
         <VStack gap={4}>
           <Grid
             templateColumns={{ base: "1fr", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }}
@@ -119,7 +116,7 @@ const MovieCard = () => {
             ))}
           </Grid>
           
-        {/* Infinite scroll trigger */}
+        {/* Infinite scroll */}
         {hasMore && (
           <Box ref={loadMoreRef} h="20px" w="100%">
             {loadingMore && (
@@ -138,7 +135,6 @@ const MovieCard = () => {
           </Box>
         )}
         </VStack>
-      {/* )} */}
     </Box>
   )
 }

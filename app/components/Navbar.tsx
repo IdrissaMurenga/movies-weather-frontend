@@ -8,7 +8,7 @@ import { useQuery } from "@apollo/client/react"
 import { RiLogoutCircleRLine } from "react-icons/ri"
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseCircle } from "react-icons/io5";
-import { Avatar, Container, Box, HStack, Text, Button, SkeletonCircle, Image, Heading, IconButton, Stack } from "@chakra-ui/react"
+import { Avatar, Box, HStack, Text, Button, SkeletonCircle, Span, Heading, IconButton, Stack } from "@chakra-ui/react"
 
 
 const linkItem = [
@@ -30,10 +30,10 @@ const Navbar = () => {
         })
     }
 
-
     const handleClose = () => {
         setOpen(false);
     };
+
     const handleOpen = () => {
         setOpen(true);
     };
@@ -47,8 +47,7 @@ const Navbar = () => {
                             {open ? <IoCloseCircle /> : <GiHamburgerMenu />}
                         </IconButton>
                     </Box>
-                    <Image src="/logo.png" alt="logo image" w="4rem" />
-                    <Heading>CineCast</Heading>
+                    <Heading>Cine<Span color="red">Cast</Span></Heading>
                 </HStack>
                 <HStack>
                     <HStack
@@ -63,7 +62,7 @@ const Navbar = () => {
                             
                             <Link href={link.href} key={link.name}>
                                 <Text
-                                    bgColor={isActive(link.href) ? "blue.600" : 'black'}
+                                    bgColor={isActive(link.href) ? "#e11d48" : 'black'}
                                     py={1} px={2}
                                     rounded="2xl"
                                     textAlign={"center"}
@@ -79,7 +78,7 @@ const Navbar = () => {
                     {loading ?
                         <SkeletonCircle size={10} />
                         : 
-                        <Avatar.Root colorPalette={'blue'}>
+                        <Avatar.Root colorPalette={'red'}>
                             <Avatar.Fallback name={`${user?.name}`} />
                         </Avatar.Root>
                     }
@@ -94,7 +93,7 @@ const Navbar = () => {
                     {linkItem.map((link) => (
                         <Link href={link.href} key={link.name}>
                             <Text
-                                bgColor={isActive(link.href) ? "blue.600" : 'black'}
+                                bgColor={isActive(link.href) ? "#e11d48" : 'black'}
                                 py={1} px={2}
                                 rounded="2xl"
                                 textAlign={"center"}

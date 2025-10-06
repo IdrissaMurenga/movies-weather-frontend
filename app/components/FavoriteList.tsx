@@ -33,12 +33,12 @@ const FavoriteList = () => {
                 </Grid>
             )}
             {favMovies.length === 0 && !loading ? 
-                <Grid w={"20rem"} mx="auto" justifyContent={"center"} py="2rem">
-                    <Image src="/star.png" alt="star icon" w='9rem' mx={'auto'} />
-                    <Text textAlign={"center"}> u have no favorite movies yet please serch movie and add as favorite</Text>
+                <Grid w={"20rem"} mx="auto" justifyContent={"center"}>
+                    <Image src="/deadpool2.png" alt="star icon" w='19rem' mx={'auto'} />
+                    <Heading textAlign={"center"}>no favorite movies yet, search movie and add as favorite</Heading>
                     <Link href='/pages/movies'>
                         <Grid>
-                        <Button bgColor="blue.400" fontWeight='bold' color="white" my="2">search movies</Button>
+                        <Button fontWeight='bold' color="white" my="2">search movies</Button>
                         </Grid>
                     </Link>
                 </Grid>

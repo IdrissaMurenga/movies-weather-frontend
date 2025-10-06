@@ -97,8 +97,6 @@ export const themeSystem = createSystem(defaultConfig, {
     },
     globalCss: {
         "html, body": {
-            // background: "linear-gradient(to bottom, #0d0000, #220000 30%, #3a0000 70%, #1a0000)",
-            // backgroundColor: "black",
             bg: "black",
             backgroundImage: `
                 radial-gradient(circle at center, rgba(200,0,0,0.25), transparent 70%)

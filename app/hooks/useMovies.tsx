@@ -136,18 +136,18 @@ const useMovies = () => {
         // First run after mount: mark hydrated and restore once
         if (!hydrated) {
             setHydrated(true);
-            const saved = localStorage.getItem("lastSearchQuery");
+            const saved = sessionStorage.getItem("lastSearchQuery");
             if (saved) setQuery(saved);
             return; // stop here on the first run
         }
 
         // Subsequent runs (after hydration): persist changes
         if (query) {
-            localStorage.setItem("lastSearchQuery", query);
+            sessionStorage.setItem("lastSearchQuery", query);
         } else {
-            localStorage.removeItem("lastSearchQuery");
+            sessionStorage.removeItem("lastSearchQuery");
         }
-}, [hydrated, query]);
+    }, [hydrated, query]);
 
     return {
         data,

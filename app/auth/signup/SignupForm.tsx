@@ -1,4 +1,4 @@
-import { Grid, Field, Text, InputGroup, Input, Button, Flex, Span } from "@chakra-ui/react"
+import { Grid, Field, Text, InputGroup, Input, Button, Flex, Span, Heading } from "@chakra-ui/react"
 import { MdOutlineEmail } from "react-icons/md"
 import { PasswordInput } from "@/components/ui/password-input"
 import { CiLock } from "react-icons/ci"
@@ -17,6 +17,7 @@ const SignupForm = () => {
             p={6} alignItems='center'
             rounded='2xl'
         >
+            <Heading textAlign="center" pb={6}>Sign up for CineCast</Heading>
             <form noValidate onSubmit={handleSubmit}>
                 <Field.Root required mb={4}>
                     <Field.Label>
@@ -126,7 +127,7 @@ const SignupForm = () => {
                             Sign up
                         </Button>
                     </Grid>
-                <Link href='/auth/signup'>
+                <Link href='/'>
                     <Text textAlign="center" pt={4} color="gray.300">
                         already have an account?
                         <Span color="#ba0505ff" pl={2}>

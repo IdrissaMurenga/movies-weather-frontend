@@ -16,7 +16,7 @@ const LoginForm = () => {
             p={6} alignItems='center'
             rounded='2xl'
         >
-            <Heading textAlign="center" pb={6}>Welcome to CineCast Login to continue</Heading>
+            <Heading textAlign="center" pb={6}>Login to CineCast</Heading>
             <form noValidate onSubmit={formik.handleSubmit}>
                 <Field.Root required mb={6}>
                     <Field.Label>
