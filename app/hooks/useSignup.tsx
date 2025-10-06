@@ -93,7 +93,7 @@ const useSignup = () => {
                         type: "warning",
                         duration: 5000,
                     });
-                    router.push("/login");
+                    router.push("/");
                     return;
                 }
 
