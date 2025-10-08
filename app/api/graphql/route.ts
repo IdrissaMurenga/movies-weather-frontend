@@ -1,38 +1,60 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/libs/auth";
 
-export const dynamic = "force-dynamic";
+// getting backend graphql uri
+const GRAPHQL_URI = process.env.GRAPHQL_URI!;
 
 export async function POST(req: NextRequest) {
     try {
-        const body = await req.text(); // pass through raw body
 
-        const API_URL = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL; // prefer server-only
+        // parse the request body
+        const body = await req.json();
 
-        if (!API_URL) {
-            return new Response(
-                JSON.stringify({ errors: [{ message: "API_URL not set" }] }),
-                { status: 500, headers: { "content-type": "application/json" } },
-            );
+        // check the signup mutation
+        const isSignupMutation = 
+            body.query?.toLowerCase().includes('mutation signup') || 
+            body.operationName?.toLowerCase() === 'signup';
+
+        let token: string | undefined;
+
+        // if the request is not for signup, verify the user
+        if (!isSignupMutation) {
+            const session = await auth();
+            
+            // if no session show unauthorize message
+            if (!session) {
+                return NextResponse.json(
+                    { errors: [{ message: "Unauthorized access" }] },
+                    { status: 401 }
+                );
+            }
+
+            // get token from session
+            token = session.apiToken;
         }
 
-        const res = await fetch(API_URL, {
+        // make the request to the GraphQL server
+        const response = await fetch(GRAPHQL_URI, {
             method: "POST",
             headers: {
-                "content-type": "application/json",
-                // forward Authorization header if your UI adds one (optional)
-                authorization: req.headers.get("authorization") ?? "",
+                "Content-Type": "application/json",
+                ...(token && { Authorization: `Bearer ${token}` })
             },
-            body,
             cache: "no-store",
+            body: JSON.stringify(body),
         });
 
-        // pass through response as-is
-        const text = await res.text();
-        return new Response(text, {
-            status: res.status,
-            headers: { "content-type": "application/json" },
+        // parse JSON response
+        const json = await response.json();
+
+        // return response status and JSON content type
+        return NextResponse.json(json, { 
+            status: response.status,
+            headers: {
+                'Content-Type': 'application/json'
+            }
         });
+
     } catch (error) {
         console.error('Route handler error:', error);
         return NextResponse.json(
