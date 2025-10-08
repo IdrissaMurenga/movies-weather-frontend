@@ -42,7 +42,7 @@ const Navbar = () => {
         <Stack>
             <HStack p={2} bgColor={'#4444'} alignItems={'center'} justifyContent={'space-between'} rounded={'2xl'}>
                 <HStack> 
-                    <Box display={{ lg: 'none' }}>
+                    <Box display={{ md: 'none' }}>
                         <IconButton onClick={open ? handleClose : handleOpen} variant='plain' size='md'>
                             {open ? <IoCloseCircle /> : <GiHamburgerMenu />}
                         </IconButton>
@@ -54,9 +54,9 @@ const Navbar = () => {
                         p={2} 
                         rounded='2xl'
                         bgColor={"black"}
-                        display={{ base: 'none', lg: 'flex' }}
+                        display={{ base: 'none', md: 'flex' }}
                         justifyContent="space-evenly"
-                        w={{ md: "1rem", lg: "26rem" }}
+                        w={{ md: "20rem", lg: "26rem" }}
                     >
                         {linkItem.map((link) => (
                             
@@ -82,14 +82,14 @@ const Navbar = () => {
                             <Avatar.Fallback name={`${user?.name}`} />
                         </Avatar.Root>
                     }
-                    <Button onClick={logout} variant="plain" color={"red"}>
+                    <Button onClick={logout} display={{ base: 'none' , md:"flex" }} variant="plain" color={"red"}>
                         <RiLogoutCircleRLine />
                         Logout
                     </Button>
                 </HStack>
             </HStack>
-            {open ? (                
-                <Stack display={{ lg: 'none' }}>
+            {open ? (
+                <Stack pos={"absolute"} w={"15rem"} top={24} zIndex={1} h={"100dvh"} display={{ md: 'none' }} bgColor={"#04ff5cff"} p={2} rounded='2xl' gap={2}>
                     {linkItem.map((link) => (
                         <Link href={link.href} key={link.name}>
                             <Text
@@ -102,7 +102,11 @@ const Navbar = () => {
                             </Text>
                         </Link>
                     ))}
-                </Stack>
+                    <Button onClick={logout} variant="plain" color={"red"}>
+                        <RiLogoutCircleRLine />
+                        Logout
+                    </Button>
+                </Stack>            
             ) : ''}
         </Stack>
     )

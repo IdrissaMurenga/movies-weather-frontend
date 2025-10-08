@@ -1,6 +1,6 @@
 import FavoriteList from "@/app/components/FavoriteList"
 import WeatherCard from "@/app/components/WeatherCard"
-import { Box, Grid } from "@chakra-ui/react"
+import { Grid } from "@chakra-ui/react"
 
 const Dashboard = () => {
     return (

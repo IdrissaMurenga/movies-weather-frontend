@@ -51,7 +51,7 @@ const MovieCard = () => {
       {!query && (
         <Grid justifyContent="center" alignContent="center" pt={2}>
           <Image src="/deadpool4.png" alt="movie icon" w="20rem" mx="auto" />
-          <Heading>Search for your favorite movies above and start exploring 🍿</Heading>
+          <Heading textAlign="center">Search for your favorite movies above and start exploring 🍿</Heading>
         </Grid>
       )}
 
@@ -73,7 +73,7 @@ const MovieCard = () => {
       )}
 
       {!loading && query && movies.length === 0 && (
-        <Text>No movies found for "{query}".</Text>
+        <Text>{`No movies found for ${query}.`}</Text>
       )}
         <VStack gap={4}>
           <Grid

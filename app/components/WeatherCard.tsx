@@ -2,8 +2,7 @@
 import { GET_WEATHER } from "@/libs/graphql"
 import { GET_USER } from "@/libs/graphql";
 import { useQuery } from "@apollo/client/react"
-import {Box, Flex, HStack, VStack, Heading, Text, Badge, Image, Skeleton, IconButton
-} from "@chakra-ui/react";
+import {Box, Flex, HStack, VStack, Heading, Text, Badge, Image, Skeleton } from "@chakra-ui/react";
 
 
 // Compute dew point from temp & humidity (Magnus formula)

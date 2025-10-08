@@ -1,5 +1,5 @@
 "use client"
-import { Grid, Field, Text, InputGroup, Input, Button, Flex, Span, Heading } from "@chakra-ui/react"
+import { Grid, Field, Text, InputGroup, Input, Button, Span, Heading } from "@chakra-ui/react"
 import { MdOutlineEmail } from "react-icons/md"
 import { CiLock } from "react-icons/ci"
 import { PasswordInput } from './../../../components/ui/password-input';
@@ -70,7 +70,7 @@ const LoginForm = () => {
                 <Grid>
                     <Button
                         disabled={isLoading}
-                        loadingText="signing in and redirecting....."
+                        loadingText="loging in..."
                         loading={isLoading}
                         type="submit"
                     >
@@ -79,7 +79,7 @@ const LoginForm = () => {
                 </Grid>
                 <Link href='/auth/signup'>
                     <Text textAlign="center" pt={4} color="gray.300">
-                        don't have an account?
+                        {"Don't have an account?"}
                         <Span color="#ba0505ff" pl={2}>
                             Create here
                         </Span>

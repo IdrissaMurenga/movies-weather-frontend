@@ -70,7 +70,7 @@ const useMovies = () => {
             })
         } catch (error) {
             toaster.create({
-                title: "Error loading more movies",
+                title: `Error loading more movies ${error}`,
                 type: "error",
                 duration: 3000,
             });
@@ -124,7 +124,7 @@ const useMovies = () => {
                 return newSet;
             });
             toaster.create({
-                title: "Failed to add to favorites",
+                title: `Failed to add to favorites ${error}`,
                 type: "error",
                 duration: 3000,
             });

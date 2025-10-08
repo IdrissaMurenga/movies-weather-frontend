@@ -6,7 +6,7 @@ import Link from "next/link"
 import useFavorite from "@/app/hooks/useFavrite"
 
 const FavoriteList = () => {
-    const { data, loading, error } = useQuery(FAVORITE_MOVIES)
+    const { data, loading } = useQuery(FAVORITE_MOVIES)
     const { removeFav } = useFavorite()
 
     const favMovies = [...(data?.favoriteMovies ?? [])].reverse()

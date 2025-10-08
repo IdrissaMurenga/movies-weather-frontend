@@ -52,13 +52,20 @@ const useLogin = () => {
                     })
                     return
                 }
+
+                toaster.create({
+                    title: "Login Successful",
+                    description: "redirecting to dashboard....",
+                    type: "success",
+                    duration: 5000,
+                });
                 // if response is successfull set loading state and redirect to dashboard
                 setDelayLoading(true);
                 router.replace("/pages/dashboard");
             
             } catch (error) {
                 toaster.create({
-                    title: "Something went wrong. Please Try again.",
+                    title: `Something went wrong. Please Try again.${error}`,
                     type: "error",
                     duration:3000
                 })

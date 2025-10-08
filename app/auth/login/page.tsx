@@ -1,4 +1,4 @@
-import { Grid, Image, Box, Heading } from '@chakra-ui/react';
+import { Grid, Image, Box } from '@chakra-ui/react';
 import LoginForm from './LoginForm';
 
 const Login = () => {
