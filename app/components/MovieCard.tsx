@@ -31,21 +31,23 @@ const MovieCard = () => {
 
   return (
     <Box py='2rem'>
-      <HStack justifyContent={"center"}>
         <form onSubmit={searchMovies}>
-          <Input
-            type='text'
-            w='20rem'
-            mx='auto'
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder='search your best movies here....'
-          />
-          <Button type='submit' ml='1rem' size={"md"} px="1.5rem">
-            Search
-          </Button>
+          <HStack>
+            <Input
+              type='text'
+              w={{ md: '22rem' }}
+              outline="none"
+              bgColor="inputBg"
+              border="none"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder='search your best movies here....'
+            />
+            <Button type='submit' bgColor="blue.800" size={"md"} px="1.5rem">
+              Search
+            </Button>
+          </HStack>
         </form>
-      </HStack>
 
       {/* show friendly message when no query entered by user */}
       {!query && (
@@ -107,7 +109,7 @@ const MovieCard = () => {
                   size="sm"
                   my='1rem'
                   onClick={() => addFavoriteMovie(movie.imdbID)}
-                  colorPalette={fav.has(movie.imdbID) ? "green" : "blue"}
+                  bgColor={fav.has(movie.imdbID) ? "green" : "blue.600"}
                   disabled={fav.has(movie.imdbID)}
                 >
                   {fav.has(movie.imdbID) ? 'Added to Favorites' : 'Add to Favorites'}

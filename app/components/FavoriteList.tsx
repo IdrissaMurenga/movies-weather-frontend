@@ -38,7 +38,7 @@ const FavoriteList = () => {
                     <Heading textAlign={"center"}>no favorite movies yet, search movie and add as favorite</Heading>
                     <Link href='/pages/movies'>
                         <Grid>
-                        <Button fontWeight='bold' color="white" my="2">search movies</Button>
+                        <Button fontWeight='bold' colorPalette="blue" color="white" my="2">search movies</Button>
                         </Grid>
                     </Link>
                 </Grid>
@@ -52,7 +52,6 @@ const FavoriteList = () => {
                             flexDirection="column"
                             key={fav.movie.id}
                         >
-                            
                             <Image
                                 src={fav.movie.poster ?? "/placeholder.png"}
                                 alt={fav.movie.title}
@@ -74,7 +73,7 @@ const FavoriteList = () => {
                                 colorPalette="red"
                                 onClick={()=>removeFavorite(fav.movie.imdbID)}
                             >
-                                    remove Favorite
+                                remove Favorite
                             </Button>
                         </Box>
                     ))}

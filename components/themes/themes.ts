@@ -70,13 +70,12 @@ const button = defineRecipe({
             },
         },
         size: {
-            md: { px: 4, py: 3, fontSize: "md" },
-            lg: { px: 5, py: 4, fontSize: "lg" },
+            md: { p: 2, fontSize: "md" },
         },
     },
     defaultVariants: {
         variant: "solid",
-        size: "lg",
+        size: "md",
     },
 });
 
@@ -99,11 +98,17 @@ export const themeSystem = createSystem(defaultConfig, {
         "html, body": {
             bg: "black",
             backgroundImage: `
-                radial-gradient(circle at center, rgba(200,0,0,0.25), transparent 70%)
+                radial-gradient(circle at center, #00063d40, transparent 70%)
             `,
+
+        },
+        "input, textarea, select": {
+            fontSize: "16px",
         },
         "*": {
             boxSizing: "border-box",
         },
-    }
+        
+        html: { textSizeAdjust: "100%" },
+    },
 });

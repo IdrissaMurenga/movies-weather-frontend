@@ -5,15 +5,15 @@ import { GET_USER } from "@/libs/graphql"
 import { signOut } from "next-auth/react"
 import { usePathname } from "next/navigation"
 import { useQuery } from "@apollo/client/react"
-import { RiLogoutCircleRLine } from "react-icons/ri"
+import { RiLogoutCircleRLine, RiDashboardFill, RiMovieFill } from "react-icons/ri"
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseCircle } from "react-icons/io5";
-import { Avatar, Box, HStack, Text, Button, SkeletonCircle, Span, Heading, IconButton, Stack } from "@chakra-ui/react"
+import { Avatar, Box, HStack, Text, Button, SkeletonCircle, Span, Heading, IconButton, Stack, Icon } from "@chakra-ui/react"
 
 
 const linkItem = [
-    {name: "Dashboard", href: "/pages/dashboard" },
-    {name: "Movies", href: "/pages/movies" }
+    {name: "Dashboard", icon: RiDashboardFill, href: "/pages/dashboard" },
+    {name: "Movies", icon: RiMovieFill, href: "/pages/movies" }
 ]
 
 const Navbar = () => {
@@ -44,31 +44,32 @@ const Navbar = () => {
                 <HStack> 
                     <Box display={{ md: 'none' }}>
                         <IconButton onClick={open ? handleClose : handleOpen} variant='plain' size='md'>
-                            {open ? <IoCloseCircle /> : <GiHamburgerMenu />}
+                            {open ? <IoCloseCircle /> :  <GiHamburgerMenu />}
                         </IconButton>
                     </Box>
-                    <Heading>Cine<Span color="red">Cast</Span></Heading>
+                    <Heading fontWeight="bold">Cine<Span color="red.500" fontStyle="italic">Cast</Span></Heading>
                 </HStack>
                 <HStack>
                     <HStack
-                        p={2} 
-                        rounded='2xl'
+                        rounded='full'
                         bgColor={"black"}
+                        gap={4}
                         display={{ base: 'none', md: 'flex' }}
-                        justifyContent="space-evenly"
-                        w={{ md: "20rem", lg: "26rem" }}
                     >
                         {linkItem.map((link) => (
                             
                             <Link href={link.href} key={link.name}>
-                                <Text
-                                    bgColor={isActive(link.href) ? "#e11d48" : 'black'}
-                                    py={1} px={2}
-                                    rounded="2xl"
+                                <HStack 
+                                    bgColor={isActive(link.href) ? "#be123c" : ''}
+                                    py={2}
+                                    px={6}
+                                    rounded="full"
                                     textAlign={"center"}
+                                    fontSize="1rem"
                                 >
-                                    {link.name}
-                                </Text>
+                                    <Icon as={link.icon} size="sm" />
+                                    <Text>{link.name}</Text>
+                                </HStack>
                             </Link>
                             
                         ))}
@@ -78,7 +79,7 @@ const Navbar = () => {
                     {loading ?
                         <SkeletonCircle size={10} />
                         : 
-                        <Avatar.Root colorPalette={'red'}>
+                        <Avatar.Root colorPalette={'blue'}>
                             <Avatar.Fallback name={`${user?.name}`} />
                         </Avatar.Root>
                     }
@@ -89,20 +90,21 @@ const Navbar = () => {
                 </HStack>
             </HStack>
             {open ? (
-                <Stack pos={"absolute"} w={"15rem"} top={24} zIndex={1} h={"100dvh"} display={{ md: 'none' }} bgColor={"#04ff5cff"} p={2} rounded='2xl' gap={2}>
-                    {linkItem.map((link) => (
-                        <Link href={link.href} key={link.name}>
-                            <Text
+                <Stack pos={"absolute"} w={"15rem"} top={24} zIndex={1} display={{ md: 'none' }} bgColor={"#202020ff"} p={2} rounded='2xl' gap={2}>
+                    {linkItem.map((link) => (                        
+                        <Link href={link.href} key={link.name} >
+                            <HStack
                                 bgColor={isActive(link.href) ? "#e11d48" : 'black'}
-                                py={1} px={2}
-                                rounded="2xl"
+                                p={2} my={4}
+                                rounded="xl"
                                 textAlign={"center"}
                             >
-                                {link.name}
-                            </Text>
+                                <Icon as={link.icon} size="sm" />
+                                <Text>{link.name}</Text>
+                            </HStack>
                         </Link>
                     ))}
-                    <Button onClick={logout} variant="plain" color={"red"}>
+                    <Button onClick={logout}  size="md">
                         <RiLogoutCircleRLine />
                         Logout
                     </Button>

@@ -91,9 +91,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       session.apiToken = token.apiToken;
       return session;
     },
+    async authorized({auth}) {
+      return !!auth
+    }
   },
   // session will use jwt method to save into cookies
   session: { strategy: "jwt" },
+
+    pages: {
+      signIn: "/",
+    },
 
   /** Silence expected invalid-login error in server console */
   logger: {
