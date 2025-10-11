@@ -93,9 +93,12 @@ const useSignup = () => {
                         type: "warning",
                         duration: 5000,
                     });
+                    
                     router.push("/");
                     return;
                 }
+
+                console.log("Signup successful:", data);
 
                 toaster.create({
                     title: "Success",
