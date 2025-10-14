@@ -4,6 +4,7 @@ import { FAVORITE_MOVIES } from "@/libs/graphql"
 import { Grid, Text, Box, Image, Button, Heading, Skeleton, VStack } from "@chakra-ui/react"
 import Link from "next/link"
 import useFavorite from "@/app/hooks/useFavrite"
+import { SkeletonLoad } from "../utils/loadingPage"
 
 const FavoriteList = () => {
     const { data, loading } = useQuery(FAVORITE_MOVIES)
@@ -19,19 +20,7 @@ const FavoriteList = () => {
     return (
         <Box>
             <Heading pb={4}>Your Favorite Movies</Heading>
-            {loading && (
-                <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={4}>
-                    {Array.from({ length: 10 }).map((_, i) => (
-                    <Box key={i} borderWidth="1px" rounded="md" overflow="hidden">
-                        <Skeleton h="240px" w="100%" />
-                        <VStack align="start" p={2}>
-                        <Skeleton h="16px" w="70%" />
-                        <Skeleton h="14px" w="40%" />
-                        </VStack>
-                    </Box>
-                    ))}
-                </Grid>
-            )}
+            {loading && <SkeletonLoad />}
             {favMovies.length === 0 && !loading ? 
                 <Grid w={"20rem"} mx="auto" justifyContent={"center"}>
                     <Image src="/deadpool2.png" alt="star icon" w='19rem' mx={'auto'} />

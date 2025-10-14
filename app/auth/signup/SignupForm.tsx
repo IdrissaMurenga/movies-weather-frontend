@@ -17,7 +17,7 @@ const SignupForm = () => {
             p={6} alignItems='center'
             rounded='2xl'
         >
-            <Heading textAlign="center" pb={6}>Sign up for CineCast</Heading>
+            <Heading textAlign="center" pb={6} fontWeight="bold">Sign up for Cine<Span color="red.500" fontStyle="italic">Cast</Span></Heading>
             <form noValidate onSubmit={handleSubmit}>
                 <Field.Root required mb={4}>
                     <Field.Label>

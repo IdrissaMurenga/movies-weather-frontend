@@ -9,6 +9,7 @@ import { RiLogoutCircleRLine, RiDashboardFill, RiMovieFill } from "react-icons/r
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseCircle } from "react-icons/io5";
 import { Avatar, Box, HStack, Text, Button, SkeletonCircle, Span, Heading, IconButton, Stack, Icon } from "@chakra-ui/react"
+import {motion} from "motion/react";
 
 
 const linkItem = [
@@ -56,23 +57,38 @@ const Navbar = () => {
                         gap={4}
                         display={{ base: 'none', md: 'flex' }}
                     >
-                        {linkItem.map((link) => (
-                            
-                            <Link href={link.href} key={link.name}>
-                                <HStack 
-                                    bgColor={isActive(link.href) ? "#be123c" : ''}
-                                    py={2}
-                                    px={6}
-                                    rounded="full"
-                                    textAlign={"center"}
-                                    fontSize="1rem"
-                                >
-                                    <Icon as={link.icon} size="sm" />
-                                    <Text>{link.name}</Text>
-                                </HStack>
-                            </Link>
-                            
-                        ))}
+                        {linkItem.map((link) => {
+                            const active = isActive(link.href);
+                            return(
+                                <Link href={link.href} key={link.name}>
+                                    <HStack 
+                                        py={2}
+                                        px={6}
+                                        rounded="full"
+                                        textAlign={"center"}
+                                        fontSize="1rem"
+                                        position={"relative"}
+                                    >
+                                        {active && (
+                                            <motion.div
+                                                layoutId="nav-active-pill"
+                                                style={{
+                                                    position: "absolute",
+                                                    inset: 0,
+                                                    borderRadius: 9999,
+                                                    background: "#be123c",
+                                                    zIndex: 0,
+                                                }}
+                                            />
+                                        )}
+                                        <HStack pos={"relative"} zIndex={1}>
+                                            <Icon as={link.icon} size="sm" />
+                                            <Text>{link.name}</Text>
+                                        </HStack>
+                                    </HStack>
+                                </Link>
+                            )
+                        })}
                     </HStack>
                 </HStack>
                 <HStack>

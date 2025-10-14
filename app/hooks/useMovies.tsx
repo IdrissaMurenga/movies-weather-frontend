@@ -130,25 +130,22 @@ const useMovies = () => {
             });
         }
     }
-
-    // persist searched movies on browser after refresh
     useEffect(() => {
-        // First run after mount: mark hydrated and restore once
-        if (!hydrated) {
-            setHydrated(true);
-            const saved = sessionStorage.getItem("lastSearchQuery");
-            if (saved) setQuery(saved);
-            return; // stop here on the first run
+        // Restore query on initial mount
+        const saved = sessionStorage.getItem("lastSearchQuery");
+        if (saved) {
+            setQuery(saved);
         }
+    }, []); // runs once when the component mounts
 
-        // Subsequent runs (after hydration): persist changes
+    useEffect(() => {
+        // Save query changes
         if (query) {
             sessionStorage.setItem("lastSearchQuery", query);
         } else {
             sessionStorage.removeItem("lastSearchQuery");
         }
-    }, [hydrated, query]);
-
+    }, [query]); // runs whenever query changes
     return {
         data,
         movies,
@@ -157,7 +154,6 @@ const useMovies = () => {
         input,
         query,
         fav,
-        hydrated,
         loadingMore,
         loadMoreRef,
         hasMore,
