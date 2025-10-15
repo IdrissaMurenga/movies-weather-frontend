@@ -33,8 +33,6 @@ const useLogin = () => {
                     redirect: false,
                 })
 
-                console.log(res)
-
                 // if no response or response fails
                 if (!res) {
                     toaster.create({
@@ -52,7 +50,6 @@ const useLogin = () => {
                         type: "error",
                         duration: 3000,
                     })
-                    console.log(res)
                     return
                 }
 

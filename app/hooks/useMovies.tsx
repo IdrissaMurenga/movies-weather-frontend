@@ -130,22 +130,26 @@ const useMovies = () => {
             });
         }
     }
+
     useEffect(() => {
-        // Restore query on initial mount
+        // Save query to session storage on changes
+        if (query) {
+            sessionStorage.setItem("lastSearchQuery", query);
+        }
+    }, [query]); // runs when query changes
+
+    useEffect(() => {
+        // To avoid hydration mismatch
+        setHydrated(true);
+    }, []);
+    
+    useEffect(() => {
         const saved = sessionStorage.getItem("lastSearchQuery");
         if (saved) {
             setQuery(saved);
         }
     }, []); // runs once when the component mounts
 
-    useEffect(() => {
-        // Save query changes
-        if (query) {
-            sessionStorage.setItem("lastSearchQuery", query);
-        } else {
-            sessionStorage.removeItem("lastSearchQuery");
-        }
-    }, [query]); // runs whenever query changes
     return {
         data,
         movies,

@@ -1,77 +1,71 @@
 "use client"
-import { Box, Button, HStack, Input, Grid, Image, VStack, Text, Skeleton, Heading } from '@chakra-ui/react'
+import { Box, Button, HStack, Input, Grid, VStack, Text, Skeleton } from '@chakra-ui/react'
 import useMovies from "../hooks/useMovies";
 import { MovieSkeleton } from '../utils/loadingPage';
+import { NoSearchMovies } from '../utils/nofoundPages';
+import Poster from '../utils/posterImage';
 
 const MovieCard = () => {
-  const { data, movies, input, query,loading, error, setInput, searchMovies, loadingMore, loadMoreRef, fav, addFavoriteMovie, hasMore } = useMovies();
-
+  const { data, movies, input, query,loading, error, setInput, searchMovies, loadingMore, loadMoreRef, fav, addFavoriteMovie, hasMore, } = useMovies(); 
 
   return (
     <Box py='2rem'>
-        <form onSubmit={searchMovies}>
-          <HStack>
-            <Input
-              type='text'
-              w={{ md: '22rem' }}
-              outline="none"
-              bgColor="inputBg"
-              border="none"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder='search your best movies here....'
-            />
-            <Button type='submit' bgColor="blue.800" size={"md"} px="1.5rem">
-              Search
-            </Button>
-          </HStack>
-        </form>
+      <form onSubmit={searchMovies}>
+        <HStack>
+          <Input
+            type='text'
+            w={{ md: '22rem' }}
+            outline="none"
+            bgColor="inputBg"
+            border="none"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder='search your best movies here....'
+          />
+          <Button type='submit' bgColor="blue.800" size={"md"} px="1.5rem">
+            Search
+          </Button>
+        </HStack>
+      </form>
 
       {/* show friendly message when no query entered by user */}
-      {!query && (
-        <Grid justifyContent="center" alignContent="center" pt={2}>
-          <Image src="/deadpool4.png" alt="movie icon" w="20rem" mx="auto" />
-          <Heading textAlign="center">Search for your favorite movies above and start exploring 🍿</Heading>
-        </Grid>
-      )}
+      {!loading && !query && <NoSearchMovies />}
 
+
+      {/* Show error message if there's an error */}
       {error && <Text color="red.500">Something went wrong.</Text>}
       
       {/* Show initial loading state only on first load */}
       {loading && !data && <MovieSkeleton />}
 
-      {!loading && query && movies.length === 0 && (
-        <Text>{`No movies found for ${query}.`}</Text>
-      )}
-        <VStack gap={4}>
-          <Grid
-            templateColumns={{ base: "1fr", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }}
-            gap={4}
-          >
-            {movies?.map((movie) => {
-              const poster = movie.poster && movie.poster !== "N/A" ? movie.poster : undefined;
-              return (
-                <Box px={3} py={6} display="flex" flexDirection="column" key={movie.id}>
-                    <Image src={poster} alt={movie.title} w="100%" h="100%" objectFit="contain" border='2px solid' rounded='md' />
-                  <Box pt={2}>
-                    <Text fontWeight="semibold">{movie.title}</Text>
-                    <Text fontSize="sm" color="gray.600">{movie.year} • {movie.type}</Text>
-                  </Box>
-                  <Box mt="auto" />
-                  <Button
-                    size="sm"
-                    my='1rem'
-                    onClick={() => addFavoriteMovie(movie.imdbID)}
-                    bgColor={fav.has(movie.imdbID) ? "green" : "blue.600"}
-                    disabled={fav.has(movie.imdbID)}
-                  >
-                    {fav.has(movie.imdbID) ? 'Added to Favorites' : 'Add to Favorites'}
-                  </Button>
-                </Box>
-              )
-            })}
-          </Grid>
-          
+      {!loading && query && movies.length === 0 && (<Text>{`No movies found for ${query}.`}</Text>)}
+
+
+      <VStack gap={4}>
+
+        {/* display movies */}
+        <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)", xl: "repeat(5, 1fr)" }} gap={4}>
+          {movies?.map((movie) => (
+            <Box px={3} py={6} display="flex" flexDirection="column" key={movie.id}>
+              <Poster src={movie.poster} alt={movie.title} />
+              <Box pt={2}>
+                <Text fontWeight="semibold">{movie.title}</Text>
+                <Text fontSize="sm" color="gray.600">{movie.year} • {movie.type}</Text>
+              </Box>
+              <Box mt="auto" />
+              <Button
+                size="sm"
+                my='1rem'
+                onClick={() => addFavoriteMovie(movie.imdbID)}
+                bgColor={fav.has(movie.imdbID) ? "green" : "blue.600"}
+                disabled={fav.has(movie.imdbID)}
+              >
+                {fav.has(movie.imdbID) ? 'Added to Favorites' : 'Add to Favorites'}
+              </Button>
+            </Box>
+          ))}
+        </Grid>
+
         {/* Infinite scroll */}
         {hasMore && (
           <Box ref={loadMoreRef} h="20px" w="100%">
@@ -94,5 +88,4 @@ const MovieCard = () => {
     </Box>
   )
 }
-
 export default MovieCard

@@ -98,8 +98,6 @@ const useSignup = () => {
                     return;
                 }
 
-                console.log("Signup successful:", data);
-
                 toaster.create({
                     title: "Success",
                     description: "Account created successfully!",

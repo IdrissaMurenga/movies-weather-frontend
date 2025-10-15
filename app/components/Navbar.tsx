@@ -26,9 +26,8 @@ const Navbar = () => {
     const user = data?.me
     
     const logout = () => {
-        signOut({
-            callbackUrl: '/'
-        })
+        sessionStorage.removeItem("lastSearchQuery");
+        signOut({ callbackUrl: '/' })
     }
 
     const handleClose = () => {
@@ -111,16 +110,17 @@ const Navbar = () => {
                         <Link href={link.href} key={link.name} >
                             <HStack
                                 bgColor={isActive(link.href) ? "#e11d48" : 'black'}
-                                p={2} my={4}
+                                p={2} my={2}
                                 rounded="xl"
                                 textAlign={"center"}
+                                onClick={handleClose}
                             >
                                 <Icon as={link.icon} size="sm" />
                                 <Text>{link.name}</Text>
                             </HStack>
                         </Link>
                     ))}
-                    <Button onClick={logout}  size="md">
+                    <Button onClick={() => { handleClose(); logout(); }}  size="md">
                         <RiLogoutCircleRLine />
                         Logout
                     </Button>
