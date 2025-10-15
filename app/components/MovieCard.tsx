@@ -29,7 +29,7 @@ const MovieCard = () => {
       </form>
 
       {/* show friendly message when no query entered by user */}
-      {!loading && !query && <NoSearchMovies />}
+      {!query && <NoSearchMovies />}
 
 
       {/* Show error message if there's an error */}

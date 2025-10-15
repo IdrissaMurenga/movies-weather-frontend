@@ -30,16 +30,12 @@ const Navbar = () => {
         signOut({ callbackUrl: '/' })
     }
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const handleClose = () =>  setOpen(false);
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
+    const handleOpen = () => setOpen(true);
     
     return (
-        <Stack>
+        <>
             <HStack p={2} bgColor={'#4444'} alignItems={'center'} justifyContent={'space-between'} rounded={'2xl'}>
                 <HStack> 
                     <Box display={{ md: 'none' }}>
@@ -126,7 +122,7 @@ const Navbar = () => {
                     </Button>
                 </Stack>            
             ) : ''}
-        </Stack>
+        </>
     )
 }
 
